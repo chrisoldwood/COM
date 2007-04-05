@@ -1,0 +1,9 @@
+;
+; This is a generic .DEF file for use by any inproc server.
+;
+
+EXPORTS
+		DllGetClassObject		PRIVATE
+		DllCanUnloadNow			PRIVATE
+		DllRegisterServer		PRIVATE
+		DllUnregisterServer		PRIVATE
