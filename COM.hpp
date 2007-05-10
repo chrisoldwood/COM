@@ -1,27 +1,45 @@
 ////////////////////////////////////////////////////////////////////////////////
-//! \author Chris Oldwood
 //! \file   Com.hpp
-//! \brief  Wrapper to include all the core COM library headers.
+//! \brief  Wrapper to include all the COM library headers.
+//! \author Chris Oldwood
 
 // Check for previous inclusion
-#ifndef COM_HPP
-#define COM_HPP
+#ifndef COM_COM_HPP
+#define COM_COM_HPP
 
 #if _MSC_VER > 1000
 #pragma once
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////
-// Standard headers
-
-#include <Core/Common.hpp>	// Core library headers.
-#include "wcl.hpp"			// Windows C++ library.
+// Library documentation
+//
+//! \namespace COM
+//! \brief     The COM Library namespace.
 
 ////////////////////////////////////////////////////////////////////////////////
-// Library headers
+// Standard headers.
 
-#include "ComUtils.hpp"
-#include "ComMain.hpp"
-#include "InprocServer.hpp"
+#include <Core/Common.hpp>		// Core library common headers.
+#include <WCL/wcl.hpp>			// Windows C++ library.
 
-#endif // COM_HPP
+////////////////////////////////////////////////////////////////////////////////
+// Other commonly used headers.
+
+#include <Core/IFacePtr.hpp>	// Interface smart-pointer class.
+
+////////////////////////////////////////////////////////////////////////////////
+// Library headers.
+
+#include <COM/ComTypes.hpp>
+#include <COM/ComUtils.hpp>
+#include <COM/ServerRegInfo.hpp>
+#include <COM/RegUtils.hpp>
+#include <COM/ComMain.hpp>
+#include <COM/ObjectBase.hpp>
+#include <COM/Server.hpp>
+#include <COM/InprocServer.hpp>
+#include <COM/ClassFactory.hpp>
+#include <COM/IDispatchImpl.hpp>
+
+#endif // COM_COM_HPP
