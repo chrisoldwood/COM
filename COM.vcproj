@@ -3,7 +3,11 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="COM"
-	ProjectGUID="{0905D2E8-A1A9-4ADD-93EB-8566758D50C6}"
+	ProjectGUID="{A5573046-6334-4DDA-94B5-EA329D0B4124}"
+	SccProjectName="SAK"
+	SccAuxPath="SAK"
+	SccLocalPath="SAK"
+	SccProvider="SAK"
 	Keyword="Win32Proj">
 	<Platforms>
 		<Platform
@@ -19,7 +23,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\wcl;..\..\Lib"
+				AdditionalIncludeDirectories="../../Lib"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
@@ -62,7 +66,7 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\wcl;..\..\Lib"
+				AdditionalIncludeDirectories="../../Lib"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				RuntimeLibrary="0"
 				ForceConformanceInForLoopScope="TRUE"
@@ -104,6 +108,9 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
+				RelativePath=".\ClassFactory.cpp">
+			</File>
+			<File
 				RelativePath=".\ComMain.cpp">
 			</File>
 			<File
@@ -115,11 +122,20 @@
 			<File
 				RelativePath=".\InprocServer.def">
 			</File>
+			<File
+				RelativePath=".\RegUtils.cpp">
+			</File>
+			<File
+				RelativePath=".\Server.cpp">
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			<File
+				RelativePath=".\ClassFactory.hpp">
+			</File>
 			<File
 				RelativePath=".\COM.hpp">
 			</File>
@@ -127,10 +143,28 @@
 				RelativePath=".\ComMain.hpp">
 			</File>
 			<File
+				RelativePath=".\ComTypes.hpp">
+			</File>
+			<File
 				RelativePath=".\ComUtils.hpp">
 			</File>
 			<File
+				RelativePath=".\IDispatchImpl.hpp">
+			</File>
+			<File
 				RelativePath=".\InprocServer.hpp">
+			</File>
+			<File
+				RelativePath=".\ObjectBase.hpp">
+			</File>
+			<File
+				RelativePath=".\RegUtils.hpp">
+			</File>
+			<File
+				RelativePath=".\Server.hpp">
+			</File>
+			<File
+				RelativePath=".\ServerRegInfo.hpp">
 			</File>
 		</Filter>
 		<Filter
@@ -138,6 +172,9 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
 		</Filter>
+		<File
+			RelativePath=".\Doxygen.cfg">
+		</File>
 		<File
 			RelativePath=".\ReadMe.txt">
 		</File>
