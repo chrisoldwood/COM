@@ -3,8 +3,8 @@
 //! \brief  COM utility functions.
 //! \author Chris Oldwood
 
-#include "com.hpp"
-#include <atlconv.h>
+#include "Common.hpp"
+#include <WCL/RegKey.hpp>
 
 #ifdef _DEBUG
 // For memory leak detection.
