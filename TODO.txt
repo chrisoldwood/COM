@@ -1,1 +1,3 @@
-- Change com.hpp to Common.hpp
+- BSTR handling.
+
+- IMallocSpy implementation.
