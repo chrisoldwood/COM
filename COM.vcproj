@@ -30,7 +30,8 @@
 				RuntimeLibrary="1"
 				ForceConformanceInForLoopScope="TRUE"
 				RuntimeTypeInfo="TRUE"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="Common.hpp"
 				WarningLevel="4"
 				WarnAsError="TRUE"
 				DebugInformationFormat="4"/>
@@ -71,7 +72,8 @@
 				RuntimeLibrary="0"
 				ForceConformanceInForLoopScope="TRUE"
 				RuntimeTypeInfo="TRUE"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="Common.hpp"
 				WarningLevel="4"
 				WarnAsError="TRUE"
 				DebugInformationFormat="3"/>
@@ -117,6 +119,9 @@
 				RelativePath=".\ComUtils.cpp">
 			</File>
 			<File
+				RelativePath=".\ErrorInfo.cpp">
+			</File>
+			<File
 				RelativePath=".\InprocServer.cpp">
 			</File>
 			<File
@@ -137,16 +142,19 @@
 				RelativePath=".\ClassFactory.hpp">
 			</File>
 			<File
-				RelativePath=".\COM.hpp">
+				RelativePath=".\ComMain.hpp">
 			</File>
 			<File
-				RelativePath=".\ComMain.hpp">
+				RelativePath=".\Common.hpp">
 			</File>
 			<File
 				RelativePath=".\ComTypes.hpp">
 			</File>
 			<File
 				RelativePath=".\ComUtils.hpp">
+			</File>
+			<File
+				RelativePath=".\ErrorInfo.hpp">
 			</File>
 			<File
 				RelativePath=".\IDispatchImpl.hpp">
