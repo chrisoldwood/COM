@@ -14,6 +14,9 @@
 namespace COM
 {
 
+// Forward declarations.
+class ServerRegInfo;
+
 ////////////////////////////////////////////////////////////////////////////////
 // Register a CLSID.
 
@@ -36,6 +39,16 @@ void RegisterTypeLib(const std::tstring& strFile); // throw(ComException)
 // Unregister a type library.
 
 void UnregisterTypeLib(const GUID& rLIBID, ushort nMajor, ushort nMinor); // throw(ComException)
+
+////////////////////////////////////////////////////////////////////////////////
+// Register a Moniker prefix.
+
+void RegisterMonikerPrefix(const std::tstring& strPrefix, const std::tstring& strClass, const CLSID& rCLSID);
+
+////////////////////////////////////////////////////////////////////////////////
+// Unregister a Moniker prefix.
+
+void UnregisterMonikerPrefix(const std::tstring& strPrefix);
 
 //namespace COM
 }

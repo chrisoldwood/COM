@@ -3,8 +3,11 @@
 //! \brief  Functions for use in registering and unregistering COM objects.
 //! \author Chris Oldwood
 
-#include "com.hpp"
-#include <atlconv.h>
+#include "Common.hpp"
+#include "RegUtils.hpp"
+#include "ServerRegInfo.hpp"
+#include "ComUtils.hpp"
+#include <WCL/RegKey.hpp>
 
 #ifdef _DEBUG
 // For memory leak detection.
@@ -43,7 +46,7 @@ void DeleteKey(const std::tstring& strSubKey)
 	if (!bDeleted)
 	{
 		DWORD dwError = ::GetLastError();
-		TRACE3("Failed to delete the key 'HKCR\\%s' [0x%08X - %s]\n", strSubKey.c_str(), dwError, CApp::FormatError(dwError));
+		TRACE3("Failed to delete the key 'HKCR\\%s' [0x%08X - %s]\n", strSubKey.c_str(), dwError, CStrCvt::FormatError(dwError));
 	}
 #endif
 }
@@ -192,9 +195,32 @@ void UnregisterTypeLib(const GUID& rLIBID, ushort nMajor, ushort nMinor)
 #ifdef _DEBUG
 	if (FAILED(hr))
 	{
-		TRACE2("Failed to unregister the type library [0x%08X - %s]", hr, CApp::FormatError(hr));
+		TRACE2("Failed to unregister the type library [0x%08X - %s]", hr, CStrCvt::FormatError(hr));
 	}
 #endif
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Register a Moniker prefix. This registers the prefix for a custom moniker
+// and the CLSID to associate with it.
+
+void RegisterMonikerPrefix(const std::tstring& strPrefix, const std::tstring& strClass, const CLSID& rCLSID)
+{
+	// Create key names.
+	std::tstring strCLSID       = FormatGUID(rCLSID);
+	std::tstring strDescription = strClass + " Class";
+
+	SetRegistryValue(strPrefix,              strDescription);
+	SetRegistryValue(strPrefix + "\\CLSID",  strCLSID);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Unregister a Moniker prefix.
+
+void UnregisterMonikerPrefix(const std::tstring& strPrefix)
+{
+	DeleteKey(strPrefix + "\\CLSID");
+	DeleteKey(strPrefix);
 }
 
 //namespace COM
