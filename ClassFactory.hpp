@@ -20,7 +20,7 @@ namespace COM
 class ClassFactory : public ObjectBase<IClassFactory>
 {
 public:
-	//! Default constructor.
+	//! Construction from a CLSID.
 	ClassFactory(const CLSID& rCLSID);
 
 	//! Destructor.
