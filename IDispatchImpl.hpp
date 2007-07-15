@@ -11,6 +11,8 @@
 #pragma once
 #endif
 
+#include "ComUtils.hpp"
+
 namespace COM
 {
 
@@ -92,11 +94,11 @@ HRESULT COMCALL IDispatchImpl<T>::GetTypeInfoCount(UINT* pnInfo)
 	{
 		// Check output parameters.
 		if (pnInfo == nullptr)
-			throw E_POINTER;
+			throw WCL::ComException(E_POINTER, "pnInfo is NULL");
 
 		*pnInfo = 1;
 	}
-	COM_CATCH_TRACE_AND_SET("IDispatchImpl::GetTypeInfoCount()", hr)
+	COM_CATCH(hr)
 
 	return hr;
 }
@@ -113,14 +115,14 @@ HRESULT COMCALL IDispatchImpl<T>::GetTypeInfo(UINT nInfo, LCID /*dwLCID*/, IType
 	{
 		// Check output parameters.
 		if (ppTypeInfo == nullptr)
-			throw E_POINTER;
+			throw WCL::ComException(E_POINTER, "ppTypeInfo is NULL");
 
 		// Reset output parameters.
 		*ppTypeInfo = nullptr;
 
 		// Validate parameters.
 		if (nInfo != 0)
-			throw DISP_E_BADINDEX;
+			throw WCL::ComException(DISP_E_BADINDEX, "nInfo must be 0");
 
 		// Load on first request.
 		if (m_pTypeLib.Get() ==  nullptr || m_pTypeInfo.Get() == nullptr)
@@ -130,7 +132,7 @@ HRESULT COMCALL IDispatchImpl<T>::GetTypeInfo(UINT nInfo, LCID /*dwLCID*/, IType
 
 		*ppTypeInfo = m_pTypeInfo.Get();
 	}
-	COM_CATCH_TRACE_AND_SET("IDispatchImpl::GetTypeInfo()", hr)
+	COM_CATCH(hr)
 
 	return hr;
 }
@@ -151,7 +153,7 @@ HRESULT COMCALL IDispatchImpl<T>::GetIDsOfNames(REFIID /*rIID*/, LPOLESTR* aszNa
 
 		hr = m_pTypeInfo->GetIDsOfNames(aszNames, nNames, alMemberIDs);
 	}
-	COM_CATCH_TRACE_AND_SET("IDispatchImpl::GetIDsOfNames()", hr)
+	COM_CATCH(hr)
 
 	return hr;
 }
@@ -170,9 +172,12 @@ HRESULT COMCALL IDispatchImpl<T>::Invoke(DISPID lMemberID, REFIID /*rIID*/, LCID
 		if (m_pTypeLib.Get() ==  nullptr || m_pTypeInfo.Get() == nullptr)
 			LoadTypeInfo();
 
+		// Clear the last exception.
+		::SetErrorInfo(0, nullptr);
+
 		hr = m_pTypeInfo->Invoke(static_cast<T*>(this), lMemberID, wFlags, pParams, pResult, pExcepInfo, pnArgError);
 	}
-	COM_CATCH_TRACE_AND_SET("IDispatchImpl::Invoke()", hr)
+	COM_CATCH(hr)
 
 	return hr;
 }
@@ -193,9 +198,28 @@ void IDispatchImpl<T>::LoadTypeInfo()
 		HRESULT hr = m_pTypeLib->GetTypeInfoOfGuid(m_oDIID, AttachTo(m_pTypeInfo));
 
 		if (FAILED(hr))
-			throw WCL::ComException(hr, CString::Fmt("Failed to get the type information for '%s'", "IID_IDualInterface"));
+		{
+			std::tstring strGUID = FormatGUID(m_oDIID);
+			std::tstring strName = LookupIID(m_oDIID);
+
+			throw WCL::ComException(hr, CString::Fmt("Failed to get the type information for %s [%s]", strGUID.c_str(), strName.c_str()));
+		}
 	}
 }
+
+////////////////////////////////////////////////////////////////////////////////
+// Macros for defining the IDispatch methods.
+
+//! Implements IUnknown.
+#define IMPLEMENT_IDISPATCH(T)																	\
+	virtual HRESULT COMCALL GetTypeInfoCount(UINT* pnInfo)										\
+	{ return COM::IDispatchImpl<T>::GetTypeInfoCount(pnInfo); }									\
+	virtual HRESULT COMCALL GetTypeInfo(UINT nInfo, LCID dwLCID, ITypeInfo** ppTypeInfo)		\
+	{ return COM::IDispatchImpl<T>::GetTypeInfo(nInfo, dwLCID, ppTypeInfo); }					\
+	virtual HRESULT COMCALL GetIDsOfNames(REFIID rIID, LPOLESTR* aszNames, UINT nNames, LCID dwLCID, DISPID* alMemberIDs)														\
+	{ return COM::IDispatchImpl<T>::GetIDsOfNames(rIID, aszNames, nNames, dwLCID, alMemberIDs); }																				\
+	virtual HRESULT COMCALL Invoke(DISPID lMemberID, REFIID rIID, LCID dwLCID, WORD wFlags, DISPPARAMS* pParams, VARIANT* pResult, EXCEPINFO* pExcepInfo, UINT* pnArgError)		\
+	{ return COM::IDispatchImpl<T>::Invoke(lMemberID, rIID, dwLCID, wFlags, pParams, pResult, pExcepInfo, pnArgError); }																
 
 //namespace COM
 }
