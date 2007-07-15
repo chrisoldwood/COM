@@ -7,6 +7,9 @@
 #ifndef COM_OBJECTBASE_HPP
 #define COM_OBJECTBASE_HPP
 
+#include <COM/Server.hpp>
+#include <unknwn.h>
+
 #if _MSC_VER > 1000
 #pragma once
 #endif
@@ -16,10 +19,12 @@ namespace COM
 
 ////////////////////////////////////////////////////////////////////////////////
 //! The base class for all COM objects. This provides an implementation of
-//! IUnknown for dynamically allocated objects.
+//! IUnknown for dynamically allocated objects. It also marks the interface as
+//! supporting COM exceptions which are handled automatically by the macro
+//! COM_CATCH_* in ErrorInfo.hpp.
 
 template<typename Base = IUnknown>
-class ObjectBase : public Base
+class ObjectBase : public Base, public ISupportErrorInfo
 {
 public:
 	//! Default constructor.
@@ -40,6 +45,13 @@ public:
     
 	//! Decrement the objects reference count.
 	virtual ULONG ReleaseImpl();
+
+	//
+	// ISupportErrorInfo methods.
+	//
+
+	//! Queries if the interface supports COM exceptiopns.
+	virtual HRESULT InterfaceSupportsErrorInfoImpl(const IID& rIID);
 
 protected:
 	//
@@ -87,7 +99,7 @@ inline HRESULT ObjectBase<Base>::QueryInterfaceImpl(const IID& rIID, void** ppIn
 	*ppInterface = interface_cast(rIID);
 
 	if (*ppInterface != nullptr)
-		AddRef();
+		AddRefImpl();
 
 	return (*ppInterface != nullptr) ? S_OK : E_NOINTERFACE;
 }
@@ -123,6 +135,15 @@ inline ULONG ObjectBase<Base>::ReleaseImpl()
 		delete this;
 
 	return nRefCount;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//! Queries if the interface supports COM exceptiopns.
+
+template<typename Base>
+inline HRESULT ObjectBase<Base>::InterfaceSupportsErrorInfoImpl(const IID& /*rIID*/)
+{
+	return S_OK;
 }
 
 //namespace COM
