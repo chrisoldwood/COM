@@ -3,8 +3,10 @@
 //! \brief  The Server class definition.
 //! \author Chris Oldwood
 
-#include "com.hpp"
-#include <atlconv.h>
+#include "Common.hpp"
+#include "Server.hpp"
+#include <WCL/Path.hpp>
+#include <WCL/Module.hpp>
 
 #ifdef _DEBUG
 // For memory leak detection.

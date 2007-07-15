@@ -11,6 +11,8 @@
 #pragma once
 #endif
 
+#include <oaidl.h>
+
 namespace COM
 {
 
@@ -28,7 +30,7 @@ public:
 	//
 
 	//! Query the lock count.
-	LONG LockCount() const;
+	long LockCount() const;
 
 	//
 	// Methods.
@@ -57,7 +59,7 @@ private:
 	//
 	// Members.
 	//
-	LONG	m_nLockCount;	//!< The lock count.
+	long	m_nLockCount;	//!< The lock count.
 
 	//
 	// Class members.
@@ -68,12 +70,9 @@ private:
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-// Implementation of inline functions.
-
-////////////////////////////////////////////////////////////////////////////////
 //! Query the lock count.
 
-inline LONG Server::LockCount() const
+inline long Server::LockCount() const
 {
 	return m_nLockCount;
 }
