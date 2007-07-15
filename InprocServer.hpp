@@ -7,8 +7,22 @@
 #ifndef COM_INPROCSERVER_HPP
 #define COM_INPROCSERVER_HPP
 
+#include <WCL/Dll.hpp>
+#include "Server.hpp"
+#include "ComMain.hpp"
+
 namespace COM
 {
+
+// Forward declarations.
+class ServerRegInfo;
+struct ClassRegInfo;
+
+//! The class factory smart-pointer type.
+typedef Core::IFacePtr<IClassFactory> IClassFactoryPtr;
+
+//! The IUnknown smart-pointer type.
+typedef Core::IFacePtr<IUnknown> IUnknownPtr;
 
 ////////////////////////////////////////////////////////////////////////////////
 //! The base class for In-prcoess (DLL based) servers.
@@ -77,6 +91,21 @@ private:
 	friend class ClassFactory;
 };
 
+////////////////////////////////////////////////////////////////////////////////
+// Macros for defining the class factory table.
+
+#define DEFINE_CLASS_FACTORY_TABLE()																\
+									virtual COM::IUnknownPtr CreateObject(const CLSID& oCLSID)		\
+									{																\
+										COM::IUnknownPtr pUnknown;									
+
+#define DEFINE_CLASS(clsid, type, primary_iface)													\
+										if (oCLSID == clsid)										\
+											pUnknown = COM::IUnknownPtr(static_cast<primary_iface*>(new type), true);
+
+#define END_CLASS_FACTORY_TABLE()																	\
+										return pUnknown;											\
+									}
 //namespace COM
 }
 

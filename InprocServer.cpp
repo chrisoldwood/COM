@@ -3,7 +3,11 @@
 //! \brief  The InprocServer class definition.
 //! \author Chris Oldwood
 
-#include "com.hpp"
+#include "Common.hpp"
+#include "InprocServer.hpp"
+#include "ServerRegInfo.hpp"
+#include "RegUtils.hpp"
+#include "ClassFactory.hpp"
 
 #ifdef _DEBUG
 // For memory leak detection.
@@ -68,7 +72,7 @@ HRESULT InprocServer::DllGetClassObject(REFCLSID roCLSID, REFIID roIID, LPVOID* 
 		if (pFactory.Get() != nullptr)
 			hr = pFactory->QueryInterface(roIID, ppFactory);
 	}
-	COM_CATCH_TRACE_AND_SET("InprocServer::DllGetClassObject()", hr)
+	COM_CATCH(hr)
 
 	return hr;
 }
