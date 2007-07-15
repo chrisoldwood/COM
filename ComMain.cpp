@@ -3,7 +3,8 @@
 //! \brief  The entry point methods for a COM inproc server.
 //! \author Chris Oldwood
 
-#include "com.hpp"
+#include "Common.hpp"
+#include "InprocServer.hpp"
 
 #ifdef _DEBUG
 // For memory leak detection.
@@ -22,7 +23,7 @@ STDAPI DllGetClassObject(REFCLSID roCLSID, REFIID roIID, LPVOID* ppFactory)
 		// Forward to inproc server singleton.
 		hr = COM::InprocServer::This().DllGetClassObject(roCLSID, roIID, ppFactory);
 	}
-	COM_CATCH_TRACE_AND_SET("DllGetClassObject()", hr)
+	COM_CATCH(hr)
 
 	return hr;
 }
@@ -39,7 +40,7 @@ STDAPI DllCanUnloadNow(void)
 		// Forward to inproc server singleton.
 		hr = COM::InprocServer::This().DllCanUnloadNow();
 	}
-	COM_CATCH_TRACE_AND_SET("DllCanUnloadNow()", hr)
+	COM_CATCH(hr)
 
 	return hr;
 }
@@ -56,7 +57,7 @@ STDAPI DllRegisterServer(void)
 		// Forward to inproc server singleton.
 		hr = COM::InprocServer::This().DllRegisterServer();
 	}
-	COM_CATCH_TRACE_AND_SET("DllRegisterServer()", hr)
+	COM_CATCH(hr)
 
 	return hr;
 }
@@ -73,7 +74,7 @@ STDAPI DllUnregisterServer(void)
 		// Forward to inproc server singleton.
 		hr = COM::InprocServer::This().DllUnregisterServer();
 	}
-	COM_CATCH_TRACE_AND_SET("DllUnregisterServer()", hr)
+	COM_CATCH(hr)
 
 	return hr;
 }
