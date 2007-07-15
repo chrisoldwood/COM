@@ -1,11 +1,11 @@
 ////////////////////////////////////////////////////////////////////////////////
-//! \file   Com.hpp
-//! \brief  Wrapper to include all the COM library headers.
+//! \file   Common.hpp
+//! \brief  Wrapper to include the most common COM library headers.
 //! \author Chris Oldwood
 
 // Check for previous inclusion
-#ifndef COM_COM_HPP
-#define COM_COM_HPP
+#ifndef COM_COMMON_HPP
+#define COM_COMMON_HPP
 
 #if _MSC_VER > 1000
 #pragma once
@@ -16,30 +16,27 @@
 //
 //! \namespace COM
 //! \brief     The COM Library namespace.
+//
+// Inproc Server CheckList:-
+//
+// - MIDL|Output|Type Library = $(ProjectName).tlb
+// - Linker|General|Register Output = Yes
+// - Linker|Input|Module Definition File = ..\Lib\COM\InprocServer.def
+// - Add resource = IDR_TYPELIB TYPELIB "ProjectName.tlb"
+// - Ensure IDR_TYPELIB = 1
 
 ////////////////////////////////////////////////////////////////////////////////
 // Standard headers.
 
 #include <Core/Common.hpp>		// Core library common headers.
-#include <WCL/wcl.hpp>			// Windows C++ library.
-
-////////////////////////////////////////////////////////////////////////////////
-// Other commonly used headers.
-
-#include <Core/IFacePtr.hpp>	// Interface smart-pointer class.
+#include <WCL/Common.hpp>		// Windows C++ library common headers.
+#include <atlconv.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 // Library headers.
 
-#include <COM/ComTypes.hpp>
-#include <COM/ComUtils.hpp>
-#include <COM/ServerRegInfo.hpp>
-#include <COM/RegUtils.hpp>
-#include <COM/ComMain.hpp>
-#include <COM/ObjectBase.hpp>
-#include <COM/Server.hpp>
-#include <COM/InprocServer.hpp>
-#include <COM/ClassFactory.hpp>
-#include <COM/IDispatchImpl.hpp>
+#include <COM/ComTypes.hpp>		// Core types and macros.
+#include <COM/ObjectBase.hpp>	// Default IUnknown implementation.
+#include <COM/ErrorInfo.hpp>	// COM error handling macros and functions.
 
-#endif // COM_COM_HPP
+#endif // COM_COMMON_HPP
