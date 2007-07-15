@@ -3,7 +3,9 @@
 //! \brief  The ClassFactory class definition.
 //! \author Chris Oldwood
 
-#include "com.hpp"
+#include "Common.hpp"
+#include "ClassFactory.hpp"
+#include "InprocServer.hpp"
 
 #ifdef _DEBUG
 // For memory leak detection.
@@ -14,7 +16,7 @@ namespace COM
 {
 
 ////////////////////////////////////////////////////////////////////////////////
-//! Default constructor.
+//! Construction from a CLSID.
 
 ClassFactory::ClassFactory(const CLSID& rCLSID)
 	: m_oCLSID(rCLSID)
@@ -55,7 +57,7 @@ HRESULT COMCALL ClassFactory::CreateInstance(IUnknown* pOuter, const IID& rIID, 
 		if (pUnknown.Get() != nullptr)
 			hr = pUnknown->QueryInterface(rIID, ppInterface);
 	}
-	COM_CATCH_TRACE_AND_SET("ClassFactory::CreateInstance()", hr)
+	COM_CATCH(hr)
 	
 	return hr;
 }
