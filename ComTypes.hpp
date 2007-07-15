@@ -11,6 +11,11 @@
 #pragma once
 #endif
 
+#include <Core/IFacePtr.hpp>
+#include <WCL/StrCvt.hpp>
+#include <WCL/ComException.hpp>
+#include <WCL/Win32Exception.hpp>
+
 namespace COM
 {
 
@@ -45,32 +50,27 @@ enum ThreadingModel
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-// Typedefs for some common interfaces.
-
-//! The class factory smart-pointer type.
-typedef Core::IFacePtr<IClassFactory> IClassFactoryPtr;
-
-//! The IUnknown smart-pointer type.
-typedef Core::IFacePtr<IUnknown> IUnknownPtr;
-
-////////////////////////////////////////////////////////////////////////////////
 // Macros for defining the interface table and IUnknown methods.
 
-//! Implements IUnknown.
+//! Implements IUnknown and ISupportErrorInfo.
 #define IMPLEMENT_IUNKNOWN()											\
 									virtual ULONG COMCALL AddRef()		\
 									{	return AddRefImpl();	}		\
 									virtual ULONG COMCALL Release()		\
 									{	return ReleaseImpl();	}		\
 									virtual HRESULT COMCALL QueryInterface(const IID& rIID, void** ppInterface)		\
-									{	return QueryInterfaceImpl(rIID, ppInterface);	}
+									{	return QueryInterfaceImpl(rIID, ppInterface);	}							\
+									virtual HRESULT COMCALL InterfaceSupportsErrorInfo(const IID& rIID)				\
+									{	return InterfaceSupportsErrorInfoImpl(rIID);	}
 
 //! Implements interface_cast to match and downcast to the rquired interface.
 #define DEFINE_INTERFACE_TABLE(primary_iface)												\
 									virtual void* interface_cast(const IID& rIID)			\
 									{														\
 										if (IsEqualIID(rIID, IID_IUnknown))					\
-											return static_cast<primary_iface*>(this);
+											return static_cast<primary_iface*>(this);		\
+										if (IsEqualIID(rIID, IID_ISupportErrorInfo))		\
+											return static_cast<ISupportErrorInfo*>(this);
 
 //! Adds a match for an interface.
 #define IMPLEMENT_INTERFACE(iid, iface_name)												\
@@ -82,54 +82,6 @@ typedef Core::IFacePtr<IUnknown> IUnknownPtr;
 										return nullptr;										\
 									}								
 									
-////////////////////////////////////////////////////////////////////////////////
-// Macros for defining the class factory table.
-
-#define DEFINE_CLASS_FACTORY_TABLE()																\
-									virtual COM::IUnknownPtr CreateObject(const CLSID& oCLSID)		\
-									{																\
-										COM::IUnknownPtr pUnknown;									
-
-#define DEFINE_CLASS(clsid, type, primary_iface)													\
-										if (oCLSID == clsid)										\
-											pUnknown = COM::IUnknownPtr(static_cast<primary_iface*>(new type), true);
-
-#define END_CLASS_FACTORY_TABLE()																	\
-										return pUnknown;											\
-									}
-
-////////////////////////////////////////////////////////////////////////////////
-// Macros for catching and handling exceptions at module boundaries.
-
-//! Catch any exceptions, write the message to the debugger and set the return value.
-#define COM_CATCH_TRACE_AND_SET(func, retval)												\
-									catch (const HRESULT& e)								\
-									{														\
-										TRACE2("Unhandled exception caught in " func " - %s [0x%08X]\n", CStrCvt::FormatError(e), e);	\
-																							\
-										retval = e;											\
-									}														\
-									catch (const WCL::ComException& e)						\
-									{														\
-										TRACE1("Unhandled exception caught in " func " - %s\n", e.what());	\
-																							\
-										retval = e.m_hResult;								\
-									}														\
-									catch (const WCL::Win32Exception& e)					\
-									{														\
-										TRACE1("Unhandled exception caught in " func " - %s\n", e.what());	\
-																							\
-										retval = HRESULT_FROM_WIN32(e.m_dwError);			\
-									}														\
-									catch (const std::exception& e)							\
-									{														\
-										TRACE1("Unhandled exception caught in " func " - %s\n", e.what());	\
-																							\
-										retval = E_UNEXPECTED;								\
-																							\
-										DEBUG_USE_ONLY(e);									\
-									}
-
 //namespace COM
 }
 
