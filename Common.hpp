@@ -30,7 +30,7 @@
 
 #include <Core/Common.hpp>		// Core library common headers.
 #include <WCL/Common.hpp>		// Windows C++ library common headers.
-#include <atlconv.h>
+#include <WCL/StrConvs.hpp>		// String conversions.
 
 ////////////////////////////////////////////////////////////////////////////////
 // Library headers.
