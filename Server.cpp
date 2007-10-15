@@ -75,8 +75,6 @@ void Server::Unlock()
 
 ITypeLibPtr Server::LoadTypeLibrary() const
 {
-	USES_CONVERSION;
-
 	CPath       strFile = CModule::This().Path();
 	ITypeLibPtr pTypeLib;
 

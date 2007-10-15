@@ -5,6 +5,7 @@
 
 #include "Common.hpp"
 #include <WCL/RegKey.hpp>
+#include <Core/AnsiWide.hpp>
 
 #ifdef _DEBUG
 // For memory leak detection.
@@ -22,14 +23,12 @@ const size_t MAX_GUID_CHARS = 38;
 
 std::tstring FormatGUID(const GUID& rGUID)
 {
-	USES_CONVERSION;
-
 	wchar_t szBuffer[MAX_GUID_CHARS+1];
 
 	if (::StringFromGUID2(rGUID, szBuffer, MAX_GUID_CHARS+1) == 0)
 		throw std::logic_error("Invalid buffer size passed to StringFromGUID2()");
 
-	return W2T(szBuffer);
+	return std::tstring(W2T(szBuffer));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

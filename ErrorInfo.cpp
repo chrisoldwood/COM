@@ -6,7 +6,6 @@
 #include "Common.hpp"
 #include "ErrorInfo.hpp"
 #include <WCL/ComPtr.hpp>
-#include <atlconv.h>
 
 #ifdef _DEBUG
 // For memory leak detection.
@@ -22,8 +21,6 @@ namespace COM
 
 bool SetComErrorInfo(const tchar* pszSource, const tchar* pszDescription)
 {
-	USES_CONVERSION;
-
 	// Type shorthands
 	typedef WCL::ComPtr<ICreateErrorInfo> ICreateErrorInfoPtr;
 	typedef WCL::ComPtr<IErrorInfo>       IErrorInfoPtr;
@@ -38,8 +35,8 @@ bool SetComErrorInfo(const tchar* pszSource, const tchar* pszDescription)
 
 	// Fill in the exception details.
 //	pCreateErrorInfo->SetGUID();
-	pCreateErrorInfo->SetSource(T2OLE(pszSource));
-	pCreateErrorInfo->SetDescription(T2OLE(pszDescription));
+	pCreateErrorInfo->SetSource(const_cast<wchar_t*>(T2W(pszSource)));
+	pCreateErrorInfo->SetDescription(const_cast<wchar_t*>(T2W(pszDescription)));
 //	pCreateErrorInfo->SetHelpFile(); 
 //	pCreateErrorInfo->SetHelpContext(); 
 	

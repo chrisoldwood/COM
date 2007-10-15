@@ -161,8 +161,6 @@ void RegisterTypeLib(const std::tstring& strFile)
 	// Type shorthands.
 	typedef Core::IFacePtr<ITypeLib> ITypeLibPtr;
 
-	USES_CONVERSION;
-
 	wchar_t     szFile[MAX_PATH+1] = {0};
 	ITypeLibPtr pTypeLib;
 
