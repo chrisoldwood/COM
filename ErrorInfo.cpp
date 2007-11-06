@@ -7,11 +7,6 @@
 #include "ErrorInfo.hpp"
 #include <WCL/ComPtr.hpp>
 
-#ifdef _DEBUG
-// For memory leak detection.
-#define new DBGCRT_NEW
-#endif
-
 namespace COM
 {
 

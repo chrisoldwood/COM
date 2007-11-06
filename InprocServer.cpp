@@ -9,11 +9,6 @@
 #include "RegUtils.hpp"
 #include "ClassFactory.hpp"
 
-#ifdef _DEBUG
-// For memory leak detection.
-#define new DBGCRT_NEW
-#endif
-
 namespace COM
 {
 

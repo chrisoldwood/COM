@@ -6,11 +6,6 @@
 #include "Common.hpp"
 #include "InprocServer.hpp"
 
-#ifdef _DEBUG
-// For memory leak detection.
-#define new DBGCRT_NEW
-#endif
-
 ////////////////////////////////////////////////////////////////////////////////
 //! Entry point for obtaining the class factory.
 
