@@ -9,6 +9,10 @@
 #include "RegUtils.hpp"
 #include "ClassFactory.hpp"
 
+// Linker directives.
+#pragma comment(lib, "ole32")
+#pragma comment(lib, "oleaut32")
+
 namespace COM
 {
 
