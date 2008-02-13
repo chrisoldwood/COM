@@ -1,3 +1,5 @@
 - BSTR handling.
 
 - IMallocSpy implementation.
+
+- Change to tstring where possible.
