@@ -6,6 +6,7 @@
 #include "Common.hpp"
 #include <WCL/RegKey.hpp>
 #include <Core/AnsiWide.hpp>
+#include <stdexcept>
 
 namespace COM
 {
@@ -32,10 +33,10 @@ std::tstring FormatGUID(const GUID& rGUID)
 std::tstring LookupCLSID(const CLSID& rCLSID)
 {
 	// Format the key name.
-	std::tstring strKey   = "CLSID\\" + FormatGUID(rCLSID);
+	std::tstring strKey = TXT("CLSID\\") + FormatGUID(rCLSID);
 
 	if (!WCL::RegKey::Exists(HKEY_CLASSES_ROOT, strKey.c_str()))
-		return "";
+		return TXT("");
 
 	// The key default value is the class name.
 	return std::tstring(WCL::RegKey::ReadKeyDefaultValue(HKEY_CLASSES_ROOT, strKey.c_str()));
@@ -47,10 +48,10 @@ std::tstring LookupCLSID(const CLSID& rCLSID)
 std::tstring LookupIID(const IID& rIID)
 {
 	// Format the key name.
-	std::tstring strKey = "Interface\\" + FormatGUID(rIID);
+	std::tstring strKey = TXT("Interface\\") + FormatGUID(rIID);
 
 	if (!WCL::RegKey::Exists(HKEY_CLASSES_ROOT, strKey.c_str()))
-		return "";
+		return TXT("");
 
 	// The key default value is the interface name.
 	return std::tstring(WCL::RegKey::ReadKeyDefaultValue(HKEY_CLASSES_ROOT, strKey.c_str()));

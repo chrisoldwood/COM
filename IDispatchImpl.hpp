@@ -94,7 +94,7 @@ HRESULT COMCALL IDispatchImpl<T>::GetTypeInfoCount(UINT* pnInfo)
 	{
 		// Check output parameters.
 		if (pnInfo == nullptr)
-			throw WCL::ComException(E_POINTER, "pnInfo is NULL");
+			throw WCL::ComException(E_POINTER, TXT("pnInfo is NULL"));
 
 		*pnInfo = 1;
 	}
@@ -115,14 +115,14 @@ HRESULT COMCALL IDispatchImpl<T>::GetTypeInfo(UINT nInfo, LCID /*dwLCID*/, IType
 	{
 		// Check output parameters.
 		if (ppTypeInfo == nullptr)
-			throw WCL::ComException(E_POINTER, "ppTypeInfo is NULL");
+			throw WCL::ComException(E_POINTER, TXT("ppTypeInfo is NULL"));
 
 		// Reset output parameters.
 		*ppTypeInfo = nullptr;
 
 		// Validate parameters.
 		if (nInfo != 0)
-			throw WCL::ComException(DISP_E_BADINDEX, "nInfo must be 0");
+			throw WCL::ComException(DISP_E_BADINDEX, TXT("nInfo must be 0"));
 
 		// Load on first request.
 		if (m_pTypeLib.Get() ==  nullptr || m_pTypeInfo.Get() == nullptr)
@@ -202,7 +202,7 @@ void IDispatchImpl<T>::LoadTypeInfo()
 			std::tstring strGUID = FormatGUID(m_oDIID);
 			std::tstring strName = LookupIID(m_oDIID);
 
-			throw WCL::ComException(hr, CString::Fmt("Failed to get the type information for %s [%s]", strGUID.c_str(), strName.c_str()));
+			throw WCL::ComException(hr, CString::Fmt(TXT("Failed to get the type information for %s [%s]"), strGUID.c_str(), strName.c_str()));
 		}
 	}
 }

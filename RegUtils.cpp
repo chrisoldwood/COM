@@ -41,7 +41,7 @@ void DeleteKey(const std::tstring& strSubKey)
 	if (!bDeleted)
 	{
 		DWORD dwError = ::GetLastError();
-		TRACE3("Failed to delete the key 'HKCR\\%s' [0x%08X - %s]\n", strSubKey.c_str(), dwError, CStrCvt::FormatError(dwError));
+		TRACE3(TXT("Failed to delete the key 'HKCR\\%s' [0x%08X - %s]\n"), strSubKey.c_str(), dwError, CStrCvt::FormatError(dwError));
 	}
 #endif
 }
@@ -49,15 +49,15 @@ void DeleteKey(const std::tstring& strSubKey)
 ////////////////////////////////////////////////////////////////////////////////
 //! Get the registry key name used for configuring the server type.
 
-const char* GetServerTypeKey(ServerType eType)
+const tchar* GetServerTypeKey(ServerType eType)
 {
-	const char* pszType = "";
+	const tchar* pszType = TXT("");
 
 	switch (eType)
 	{
-		case INPROC_SERVER:	pszType = "InprocServer32";	break;
-		case LOCAL_SERVER:	pszType = "LocalServer32";	break;
-		default:			ASSERT_FALSE();				break;
+		case INPROC_SERVER:	pszType = TXT("InprocServer32");	break;
+		case LOCAL_SERVER:	pszType = TXT("LocalServer32");		break;
+		default:			ASSERT_FALSE();						break;
 	}
 
 	return pszType;
@@ -66,18 +66,18 @@ const char* GetServerTypeKey(ServerType eType)
 ////////////////////////////////////////////////////////////////////////////////
 //! Get the registry key name used for configuring the threading model.
 
-const char* GetThreadModelKey(ThreadingModel eModel)
+const tchar* GetThreadModelKey(ThreadingModel eModel)
 {
-	const char* pszModel = "";
+	const tchar* pszModel = TXT("");
 
 	switch (eModel)
 	{
-		case MAIN_THREAD_APT:	pszModel = "";			break;
-		case SINGLE_THREAD_APT:	pszModel = "Apartment";	break;
-		case FREE_THREAD_APT:	pszModel = "Free";		break;
-		case ANY_APARTMENT:		pszModel = "Both";		break;
-		case NEUTRAL_APARTMENT:	pszModel = "Neutral";	break;
-		default:				ASSERT_FALSE();			break;
+		case MAIN_THREAD_APT:	pszModel = TXT("");				break;
+		case SINGLE_THREAD_APT:	pszModel = TXT("Apartment");	break;
+		case FREE_THREAD_APT:	pszModel = TXT("Free");			break;
+		case ANY_APARTMENT:		pszModel = TXT("Both");			break;
+		case NEUTRAL_APARTMENT:	pszModel = TXT("Neutral");		break;
+		default:				ASSERT_FALSE();					break;
 	}
 
 	return pszModel;
@@ -93,29 +93,29 @@ void RegisterCLSID(const ServerRegInfo& rSvrInfo, const CLSID& rCLSID,
 	// Create key names.
 	std::tstring strCLSID       = FormatGUID(rCLSID);
 	std::tstring strLIBID       = FormatGUID(rSvrInfo.m_oLIBID);
-	std::tstring strProgID      = rSvrInfo.m_strLibrary + "." + strClass;
-	std::tstring strVerProgID   = strProgID + "." + strVersion;
-	std::tstring strDescription = strClass + " Class";
-	std::tstring strCLSIDKey    = "CLSID\\" + strCLSID;
+	std::tstring strProgID      = rSvrInfo.m_strLibrary + TXT(".") + strClass;
+	std::tstring strVerProgID   = strProgID + TXT(".") + strVersion;
+	std::tstring strDescription = strClass + TXT(" Class");
+	std::tstring strCLSIDKey    = TXT("CLSID\\") + strCLSID;
 	std::tstring strServerType  = GetServerTypeKey(rSvrInfo.m_eType);
 	std::tstring strThreadModel = GetThreadModelKey(eModel);
 
 	// Create the version independent prog ID section.
-	SetRegistryValue(strProgID,              strDescription);
-	SetRegistryValue(strProgID + "\\CLSID",  strCLSID);
-	SetRegistryValue(strProgID + "\\CurVer", strVerProgID);
+	SetRegistryValue(strProgID,                   strDescription);
+	SetRegistryValue(strProgID + TXT("\\CLSID"),  strCLSID);
+	SetRegistryValue(strProgID + TXT("\\CurVer"), strVerProgID);
 
 	// Create the version dependent prog ID section.
-	SetRegistryValue(strVerProgID,             strDescription);
-	SetRegistryValue(strVerProgID + "\\CLSID", strCLSID);
+	SetRegistryValue(strVerProgID,                  strDescription);
+	SetRegistryValue(strVerProgID + TXT("\\CLSID"), strCLSID);
 
 	// Create the CLSID section.
-	SetRegistryValue(strCLSIDKey,                                strClass);
-	SetRegistryValue(strCLSIDKey + "\\" + strServerType,         rSvrInfo.m_strFile);
-	SetRegistryValue(strCLSIDKey + "\\" + strServerType,         "ThreadingModel", strThreadModel);
-	SetRegistryValue(strCLSIDKey + "\\ProgID",                   strVerProgID);
-	SetRegistryValue(strCLSIDKey + "\\VersionIndependentProgID", strProgID);
-	SetRegistryValue(strCLSIDKey + "\\TypeLib",                  strLIBID);
+	SetRegistryValue(strCLSIDKey,                                     strClass);
+	SetRegistryValue(strCLSIDKey + TXT("\\") + strServerType,         rSvrInfo.m_strFile);
+	SetRegistryValue(strCLSIDKey + TXT("\\") + strServerType,         TXT("ThreadingModel"), strThreadModel);
+	SetRegistryValue(strCLSIDKey + TXT("\\ProgID"),                   strVerProgID);
+	SetRegistryValue(strCLSIDKey + TXT("\\VersionIndependentProgID"), strProgID);
+	SetRegistryValue(strCLSIDKey + TXT("\\TypeLib"),                  strLIBID);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -126,25 +126,25 @@ void UnregisterCLSID(const ServerRegInfo& rSvrInfo, const CLSID& rCLSID,
 {
 	// Create key names.
 	std::tstring strCLSID     = FormatGUID(rCLSID);
-	std::tstring strProgID    = rSvrInfo.m_strLibrary + "." + strClass;
-	std::tstring strVerProgID = strProgID + "." + strVersion;
-	std::tstring strCLSIDKey  = "CLSID\\" + strCLSID;
+	std::tstring strProgID    = rSvrInfo.m_strLibrary + TXT(".") + strClass;
+	std::tstring strVerProgID = strProgID + TXT(".") + strVersion;
+	std::tstring strCLSIDKey  = TXT("CLSID\\") + strCLSID;
 	std::tstring strServerType  = GetServerTypeKey(rSvrInfo.m_eType);
 
 	// Delete the version independent prog ID section.
-	DeleteKey(strProgID + "\\CLSID");
-	DeleteKey(strProgID + "\\CurVer");
+	DeleteKey(strProgID + TXT("\\CLSID"));
+	DeleteKey(strProgID + TXT("\\CurVer"));
 	DeleteKey(strProgID);
 
 	// Delete the version dependent prog ID section.
-	DeleteKey(strVerProgID + "\\CLSID");
+	DeleteKey(strVerProgID + TXT("\\CLSID"));
 	DeleteKey(strVerProgID);
 
 	// Delete the CLSID section.
-	DeleteKey(strCLSIDKey + "\\" + strServerType);
-	DeleteKey(strCLSIDKey + "\\ProgID");
-	DeleteKey(strCLSIDKey + "\\VersionIndependentProgID");
-	DeleteKey(strCLSIDKey + "\\TypeLib");
+	DeleteKey(strCLSIDKey + TXT("\\") + strServerType);
+	DeleteKey(strCLSIDKey + TXT("\\ProgID"));
+	DeleteKey(strCLSIDKey + TXT("\\VersionIndependentProgID"));
+	DeleteKey(strCLSIDKey + TXT("\\TypeLib"));
 	DeleteKey(strCLSIDKey);
 }
 
@@ -166,13 +166,13 @@ void RegisterTypeLib(const std::tstring& strFile)
 	HRESULT hr = ::LoadTypeLib(szFile, AttachTo(pTypeLib));
 
 	if (FAILED(hr))
-		throw WCL::ComException(hr, CString::Fmt("Failed to load the type library '%s'", strFile.c_str()));
+		throw WCL::ComException(hr, CString::Fmt(TXT("Failed to load the type library '%s'"), strFile.c_str()));
 
 	// Register it.
 	hr = ::RegisterTypeLib(pTypeLib.Get(), szFile, nullptr);
 
 	if (FAILED(hr))
-		throw WCL::ComException(hr, CString::Fmt("Failed to register the type library '%s'", strFile.c_str()));
+		throw WCL::ComException(hr, CString::Fmt(TXT("Failed to register the type library '%s'"), strFile.c_str()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -188,7 +188,7 @@ void UnregisterTypeLib(const GUID& rLIBID, ushort nMajor, ushort nMinor)
 #ifdef _DEBUG
 	if (FAILED(hr))
 	{
-		TRACE2("Failed to unregister the type library [0x%08X - %s]", hr, CStrCvt::FormatError(hr));
+		TRACE2(TXT("Failed to unregister the type library [0x%08X - %s]"), hr, CStrCvt::FormatError(hr));
 	}
 #endif
 }
@@ -201,10 +201,10 @@ void RegisterMonikerPrefix(const std::tstring& strPrefix, const std::tstring& st
 {
 	// Create key names.
 	std::tstring strCLSID       = FormatGUID(rCLSID);
-	std::tstring strDescription = strClass + " Class";
+	std::tstring strDescription = strClass + TXT(" Class");
 
-	SetRegistryValue(strPrefix,              strDescription);
-	SetRegistryValue(strPrefix + "\\CLSID",  strCLSID);
+	SetRegistryValue(strPrefix,                  strDescription);
+	SetRegistryValue(strPrefix + TXT("\\CLSID"), strCLSID);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -212,7 +212,7 @@ void RegisterMonikerPrefix(const std::tstring& strPrefix, const std::tstring& st
 
 void UnregisterMonikerPrefix(const std::tstring& strPrefix)
 {
-	DeleteKey(strPrefix + "\\CLSID");
+	DeleteKey(strPrefix + TXT("\\CLSID"));
 	DeleteKey(strPrefix);
 }
 

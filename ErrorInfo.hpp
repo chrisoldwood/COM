@@ -15,7 +15,7 @@ namespace COM
 {
 
 //! Set the COM ErrorInfo object for the logical thread.
-bool SetComErrorInfo(const tchar* pszSource, const tchar* pszDescription); // throw()
+bool SetComErrorInfo(const char* pszSource, const char* pszDescription); // throw()
 
 ////////////////////////////////////////////////////////////////////////////////
 // Macro for catching and handling exceptions at module boundaries.
@@ -24,7 +24,7 @@ bool SetComErrorInfo(const tchar* pszSource, const tchar* pszDescription); // th
 #define COM_CATCH(retval)																	\
 									catch (const WCL::ComException& e)						\
 									{														\
-										TRACE1("WCL::ComException exception caught in " __FUNCTION__ " - %s\n", e.what());	\
+										TRACE2(TXT("WCL::ComException exception caught in '%hs' - %hs\n"), __FUNCTION__, e.what());	\
 																							\
 										COM::SetComErrorInfo(__FUNCTION__, e.what());		\
 																							\
@@ -32,7 +32,7 @@ bool SetComErrorInfo(const tchar* pszSource, const tchar* pszDescription); // th
 									}														\
 									catch (const WCL::Win32Exception& e)					\
 									{														\
-										TRACE1("WCL::Win32Exception exception caught in " __FUNCTION__ " - %s\n", e.what());	\
+										TRACE2(TXT("WCL::Win32Exception exception caught in '%hs' - %hs\n"), __FUNCTION__, e.what());	\
 																							\
 										COM::SetComErrorInfo(__FUNCTION__, e.what());		\
 																							\
@@ -40,7 +40,7 @@ bool SetComErrorInfo(const tchar* pszSource, const tchar* pszDescription); // th
 									}														\
 									catch (const std::exception& e)							\
 									{														\
-										TRACE1("std::exception caught in " __FUNCTION__ " - %s\n", e.what());	\
+										TRACE2(TXT("std::exception caught in '%hs' - %hs\n"), __FUNCTION__, e.what());	\
 																							\
 										COM::SetComErrorInfo(__FUNCTION__, e.what());		\
 																							\

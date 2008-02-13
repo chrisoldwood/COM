@@ -77,7 +77,7 @@ ITypeLibPtr Server::LoadTypeLibrary() const
 	HRESULT hr = ::LoadTypeLib(T2W(strFile), AttachTo(pTypeLib));
 
 	if (FAILED(hr))
-		throw WCL::ComException(hr, CString::Fmt("Failed to load the type library '%s'", strFile));
+		throw WCL::ComException(hr, CString::Fmt(TXT("Failed to load the type library '%s'"), strFile));
 
 	return pTypeLib;
 }

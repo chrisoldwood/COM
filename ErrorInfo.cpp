@@ -14,7 +14,7 @@ namespace COM
 //! Set the COM ErrorInfo object for the thread. The return value indicates if
 //! the "throw" was succesful or not.
 
-bool SetComErrorInfo(const tchar* pszSource, const tchar* pszDescription)
+bool SetComErrorInfo(const char* pszSource, const char* pszDescription)
 {
 	// Type shorthands
 	typedef WCL::ComPtr<ICreateErrorInfo> ICreateErrorInfoPtr;
@@ -30,8 +30,8 @@ bool SetComErrorInfo(const tchar* pszSource, const tchar* pszDescription)
 
 	// Fill in the exception details.
 //	pCreateErrorInfo->SetGUID();
-	pCreateErrorInfo->SetSource(const_cast<wchar_t*>(T2W(pszSource)));
-	pCreateErrorInfo->SetDescription(const_cast<wchar_t*>(T2W(pszDescription)));
+	pCreateErrorInfo->SetSource(const_cast<wchar_t*>(A2W(pszSource)));
+	pCreateErrorInfo->SetDescription(const_cast<wchar_t*>(A2W(pszDescription)));
 //	pCreateErrorInfo->SetHelpFile(); 
 //	pCreateErrorInfo->SetHelpContext(); 
 	
