@@ -1,0 +1,14 @@
+////////////////////////////////////////////////////////////////////////////////
+//! \file   TypeLibrary.idl
+//! \brief  The unit test type library.
+//! \author Chris Oldwood
+
+[
+	uuid(31F6B1BD-E2C4-4d64-A28A-66BFC42E22CC),
+	helpstring("Unit Test Type Library"),
+	version(1.0)
+]
+library UnitTestLib
+{
+	importlib("STDOLE2.TLB");
+};
