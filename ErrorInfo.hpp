@@ -14,7 +14,7 @@
 namespace COM
 {
 
-//! Set the COM ErrorInfo object for the logical thread.
+// Set the COM ErrorInfo object for the logical thread.
 bool SetComErrorInfo(const char* pszSource, const char* pszDescription); // throw()
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //! \file   ErrorInfo.cpp
-//! \brief  .
+//! \brief  COM error handling macros and functions.
 //! \author Chris Oldwood
 
 #include "Common.hpp"
