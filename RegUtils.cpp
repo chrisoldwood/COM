@@ -154,7 +154,7 @@ void UnregisterCLSID(const ServerRegInfo& rSvrInfo, const CLSID& rCLSID,
 void RegisterTypeLib(const std::tstring& strFile)
 {
 	// Type shorthands.
-	typedef Core::IFacePtr<ITypeLib> ITypeLibPtr;
+	typedef WCL::IFacePtr<ITypeLib> ITypeLibPtr;
 
 	wchar_t     szFile[MAX_PATH+1] = {0};
 	ITypeLibPtr pTypeLib;

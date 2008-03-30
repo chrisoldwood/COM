@@ -19,10 +19,10 @@ class ServerRegInfo;
 struct ClassRegInfo;
 
 //! The class factory smart-pointer type.
-typedef Core::IFacePtr<IClassFactory> IClassFactoryPtr;
+typedef WCL::IFacePtr<IClassFactory> IClassFactoryPtr;
 
 //! The IUnknown smart-pointer type.
-typedef Core::IFacePtr<IUnknown> IUnknownPtr;
+typedef WCL::IFacePtr<IUnknown> IUnknownPtr;
 
 ////////////////////////////////////////////////////////////////////////////////
 //! The base class for In-prcoess (DLL based) servers.

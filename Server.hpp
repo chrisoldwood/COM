@@ -11,13 +11,14 @@
 #pragma once
 #endif
 
+#include <WCL/IFacePtr.hpp>
 #include <oaidl.h>
 
 namespace COM
 {
 
 //! The Type Library smart-pointer type.
-typedef Core::IFacePtr<ITypeLib> ITypeLibPtr;
+typedef WCL::IFacePtr<ITypeLib> ITypeLibPtr;
 
 ////////////////////////////////////////////////////////////////////////////////
 //! The mixin class used for the common (DLL/EXE) COM server behaviour.

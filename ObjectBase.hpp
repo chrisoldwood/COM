@@ -34,6 +34,13 @@ public:
 	virtual ~ObjectBase();
 
 	//
+	// Properties.
+	//
+
+	//! Get the object reference count.
+	ULONG GetRefCount() const;
+
+	//
 	// IUnknown methods.
 	//
 
@@ -83,6 +90,15 @@ inline ObjectBase<Base>::ObjectBase()
 template<typename Base>
 inline ObjectBase<Base>::~ObjectBase()
 {
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//! Get the object reference count.
+
+template<typename Base>
+inline ULONG ObjectBase<Base>::GetRefCount() const
+{
+	return m_nRefCount;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
