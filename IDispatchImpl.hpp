@@ -47,8 +47,8 @@ public:
 
 private:
 	// Type shorthands.
-	typedef Core::IFacePtr<ITypeLib>  ITypeLibPtr;
-	typedef Core::IFacePtr<ITypeInfo> ITypeInfoPtr;
+	typedef WCL::IFacePtr<ITypeLib>  ITypeLibPtr;
+	typedef WCL::IFacePtr<ITypeInfo> ITypeInfoPtr;
 
 	//
 	// Members.
