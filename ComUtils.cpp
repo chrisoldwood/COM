@@ -6,7 +6,7 @@
 #include "Common.hpp"
 #include <WCL/RegKey.hpp>
 #include <Core/AnsiWide.hpp>
-#include <stdexcept>
+#include <Core/BadLogicException.hpp>
 
 namespace COM
 {
@@ -22,7 +22,7 @@ std::tstring FormatGUID(const GUID& rGUID)
 	wchar_t szBuffer[MAX_GUID_CHARS+1];
 
 	if (::StringFromGUID2(rGUID, szBuffer, MAX_GUID_CHARS+1) == 0)
-		throw std::logic_error("Invalid buffer size passed to StringFromGUID2()");
+		throw Core::BadLogicException(TXT("Invalid buffer size passed to StringFromGUID2()"));
 
 	return std::tstring(W2T(szBuffer));
 }
