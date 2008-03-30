@@ -11,7 +11,7 @@
 #pragma once
 #endif
 
-#include <Core/IFacePtr.hpp>
+#include <WCL/IFacePtr.hpp>
 #include <WCL/StrCvt.hpp>
 #include <WCL/ComException.hpp>
 #include <WCL/Win32Exception.hpp>
