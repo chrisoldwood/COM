@@ -199,8 +199,8 @@ void IDispatchImpl<T>::LoadTypeInfo()
 
 		if (FAILED(hr))
 		{
-			std::tstring strGUID = FormatGUID(m_oDIID);
-			std::tstring strName = LookupIID(m_oDIID);
+			tstring strGUID = FormatGUID(m_oDIID);
+			tstring strName = LookupIID(m_oDIID);
 
 			throw WCL::ComException(hr, CString::Fmt(TXT("Failed to get the type information for %s [%s]"), strGUID.c_str(), strName.c_str()));
 		}

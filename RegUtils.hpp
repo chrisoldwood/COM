@@ -21,19 +21,19 @@ class ServerRegInfo;
 // Register a CLSID.
 
 void RegisterCLSID(const ServerRegInfo& rSvrInfo, const CLSID& rCLSID,
-					const std::tstring& strClass, const std::tstring& strVersion,
+					const tstring& strClass, const tstring& strVersion,
 					ThreadingModel eModel); // throw(RegistryException, ComException)
 
 ////////////////////////////////////////////////////////////////////////////////
 // Unregister a CLSID.
 
 void UnregisterCLSID(const ServerRegInfo& rSvrInfo, const CLSID& rCLSID,
-					const std::tstring& strClass, const std::tstring& strVersion); // throw(RegistryException, ComException)
+					const tstring& strClass, const tstring& strVersion); // throw(RegistryException, ComException)
 
 ////////////////////////////////////////////////////////////////////////////////
 // Register a type library.
 
-void RegisterTypeLib(const std::tstring& strFile); // throw(ComException)
+void RegisterTypeLib(const tstring& strFile); // throw(ComException)
 
 ////////////////////////////////////////////////////////////////////////////////
 // Unregister a type library.
@@ -43,12 +43,12 @@ void UnregisterTypeLib(const GUID& rLIBID, ushort nMajor, ushort nMinor); // thr
 ////////////////////////////////////////////////////////////////////////////////
 // Register a Moniker prefix.
 
-void RegisterMonikerPrefix(const std::tstring& strPrefix, const std::tstring& strClass, const CLSID& rCLSID);
+void RegisterMonikerPrefix(const tstring& strPrefix, const tstring& strClass, const CLSID& rCLSID);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Unregister a Moniker prefix.
 
-void UnregisterMonikerPrefix(const std::tstring& strPrefix);
+void UnregisterMonikerPrefix(const tstring& strPrefix);
 
 //namespace COM
 }

@@ -15,7 +15,7 @@ namespace COM
 ////////////////////////////////////////////////////////////////////////////////
 //! Creates or updates the default value for a registry key under the HKCR tree.
 
-void SetRegistryValue(const std::tstring& strSubKey, const std::tstring& strValue)
+void SetRegistryValue(const tstring& strSubKey, const tstring& strValue)
 {
 	WCL::RegKey::WriteKeyDefaultValue(HKEY_CLASSES_ROOT, strSubKey.c_str(), strValue.c_str());
 }
@@ -23,7 +23,7 @@ void SetRegistryValue(const std::tstring& strSubKey, const std::tstring& strValu
 ////////////////////////////////////////////////////////////////////////////////
 //! Creates or updates a named value for a registry key under the HKCR tree.
 
-void SetRegistryValue(const std::tstring& strSubKey, const std::tstring& strName, const std::tstring& strValue)
+void SetRegistryValue(const tstring& strSubKey, const tstring& strName, const tstring& strValue)
 {
 	WCL::RegKey::WriteKeyStringValue(HKEY_CLASSES_ROOT, strSubKey.c_str(), strName.c_str(), strValue.c_str());
 }
@@ -31,7 +31,7 @@ void SetRegistryValue(const std::tstring& strSubKey, const std::tstring& strName
 ////////////////////////////////////////////////////////////////////////////////
 //! Deletes the key from under the HKCR tree.
 
-void DeleteKey(const std::tstring& strSubKey)
+void DeleteKey(const tstring& strSubKey)
 {
 	bool bDeleted = false;
 
@@ -87,18 +87,18 @@ const tchar* GetThreadModelKey(ThreadingModel eModel)
 //! Register a CLSID.
 
 void RegisterCLSID(const ServerRegInfo& rSvrInfo, const CLSID& rCLSID,
-					const std::tstring& strClass, const std::tstring& strVersion,
+					const tstring& strClass, const tstring& strVersion,
 					ThreadingModel eModel)
 {
 	// Create key names.
-	std::tstring strCLSID       = FormatGUID(rCLSID);
-	std::tstring strLIBID       = FormatGUID(rSvrInfo.m_oLIBID);
-	std::tstring strProgID      = rSvrInfo.m_strLibrary + TXT(".") + strClass;
-	std::tstring strVerProgID   = strProgID + TXT(".") + strVersion;
-	std::tstring strDescription = strClass + TXT(" Class");
-	std::tstring strCLSIDKey    = TXT("CLSID\\") + strCLSID;
-	std::tstring strServerType  = GetServerTypeKey(rSvrInfo.m_eType);
-	std::tstring strThreadModel = GetThreadModelKey(eModel);
+	tstring strCLSID       = FormatGUID(rCLSID);
+	tstring strLIBID       = FormatGUID(rSvrInfo.m_oLIBID);
+	tstring strProgID      = rSvrInfo.m_strLibrary + TXT(".") + strClass;
+	tstring strVerProgID   = strProgID + TXT(".") + strVersion;
+	tstring strDescription = strClass + TXT(" Class");
+	tstring strCLSIDKey    = TXT("CLSID\\") + strCLSID;
+	tstring strServerType  = GetServerTypeKey(rSvrInfo.m_eType);
+	tstring strThreadModel = GetThreadModelKey(eModel);
 
 	// Create the version independent prog ID section.
 	SetRegistryValue(strProgID,                   strDescription);
@@ -122,14 +122,14 @@ void RegisterCLSID(const ServerRegInfo& rSvrInfo, const CLSID& rCLSID,
 //! Unregister a CLSID.
 
 void UnregisterCLSID(const ServerRegInfo& rSvrInfo, const CLSID& rCLSID,
-					const std::tstring& strClass, const std::tstring& strVersion)
+					const tstring& strClass, const tstring& strVersion)
 {
 	// Create key names.
-	std::tstring strCLSID     = FormatGUID(rCLSID);
-	std::tstring strProgID    = rSvrInfo.m_strLibrary + TXT(".") + strClass;
-	std::tstring strVerProgID = strProgID + TXT(".") + strVersion;
-	std::tstring strCLSIDKey  = TXT("CLSID\\") + strCLSID;
-	std::tstring strServerType  = GetServerTypeKey(rSvrInfo.m_eType);
+	tstring strCLSID     = FormatGUID(rCLSID);
+	tstring strProgID    = rSvrInfo.m_strLibrary + TXT(".") + strClass;
+	tstring strVerProgID = strProgID + TXT(".") + strVersion;
+	tstring strCLSIDKey  = TXT("CLSID\\") + strCLSID;
+	tstring strServerType  = GetServerTypeKey(rSvrInfo.m_eType);
 
 	// Delete the version independent prog ID section.
 	DeleteKey(strProgID + TXT("\\CLSID"));
@@ -151,7 +151,7 @@ void UnregisterCLSID(const ServerRegInfo& rSvrInfo, const CLSID& rCLSID,
 ////////////////////////////////////////////////////////////////////////////////
 //! Register a type library.
 
-void RegisterTypeLib(const std::tstring& strFile)
+void RegisterTypeLib(const tstring& strFile)
 {
 	// Type shorthands.
 	typedef WCL::IFacePtr<ITypeLib> ITypeLibPtr;
@@ -197,11 +197,11 @@ void UnregisterTypeLib(const GUID& rLIBID, ushort nMajor, ushort nMinor)
 // Register a Moniker prefix. This registers the prefix for a custom moniker
 // and the CLSID to associate with it.
 
-void RegisterMonikerPrefix(const std::tstring& strPrefix, const std::tstring& strClass, const CLSID& rCLSID)
+void RegisterMonikerPrefix(const tstring& strPrefix, const tstring& strClass, const CLSID& rCLSID)
 {
 	// Create key names.
-	std::tstring strCLSID       = FormatGUID(rCLSID);
-	std::tstring strDescription = strClass + TXT(" Class");
+	tstring strCLSID       = FormatGUID(rCLSID);
+	tstring strDescription = strClass + TXT(" Class");
 
 	SetRegistryValue(strPrefix,                  strDescription);
 	SetRegistryValue(strPrefix + TXT("\\CLSID"), strCLSID);
@@ -210,7 +210,7 @@ void RegisterMonikerPrefix(const std::tstring& strPrefix, const std::tstring& st
 ////////////////////////////////////////////////////////////////////////////////
 // Unregister a Moniker prefix.
 
-void UnregisterMonikerPrefix(const std::tstring& strPrefix)
+void UnregisterMonikerPrefix(const tstring& strPrefix)
 {
 	DeleteKey(strPrefix + TXT("\\CLSID"));
 	DeleteKey(strPrefix);

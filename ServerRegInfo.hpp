@@ -27,8 +27,8 @@ public:
 	// Members.
 	//
 	ServerType		m_eType;		//!< The server type.
-	std::tstring	m_strFile;		//!< The full path to the file.
-	std::tstring	m_strLibrary;	//!< The library name.
+	tstring			m_strFile;		//!< The full path to the file.
+	tstring			m_strLibrary;	//!< The library name.
 	GUID			m_oLIBID;		//!< The type library GUID.
 	ushort			m_nMajor;		//!< The type library major version.
 	ushort			m_nMinor;		//!< The type library minor version.

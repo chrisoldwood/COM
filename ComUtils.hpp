@@ -19,17 +19,17 @@ namespace COM
 ////////////////////////////////////////////////////////////////////////////////
 // Format the GUID as a string in Registry format.
 
-std::tstring FormatGUID(const GUID& rGUID);
+tstring FormatGUID(const GUID& rGUID);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Find the human readable name for the class ID.
 
-std::tstring LookupCLSID(const CLSID& rCLSID);
+tstring LookupCLSID(const CLSID& rCLSID);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Find the human readable name for the interface ID.
 
-std::tstring LookupIID(const IID& rIID);
+tstring LookupIID(const IID& rIID);
 
 //namespace COM
 }
