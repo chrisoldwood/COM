@@ -15,7 +15,7 @@ void TestErrorInfo()
 {
 	typedef WCL::ComPtr<IErrorInfo> IErrorInfoPtr;
 
-	TEST_TRUE(COM::SetComErrorInfo(__FUNCTION__, "Description"));
+	TEST_TRUE(COM::SetComErrorInfo(__FUNCTION__, TXT("Description")));
 
 	IErrorInfoPtr pErrorInfo;
 
