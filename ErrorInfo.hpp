@@ -15,7 +15,7 @@ namespace COM
 {
 
 // Set the COM ErrorInfo object for the logical thread.
-bool SetComErrorInfo(const char* pszSource, const char* pszDescription); // throw()
+bool SetComErrorInfo(const char* pszSource, const tchar* pszDescription); // throw()
 
 ////////////////////////////////////////////////////////////////////////////////
 // Macro for catching and handling exceptions at module boundaries.
@@ -24,25 +24,33 @@ bool SetComErrorInfo(const char* pszSource, const char* pszDescription); // thro
 #define COM_CATCH(retval)																	\
 									catch (const WCL::ComException& e)						\
 									{														\
-										TRACE2(TXT("WCL::ComException exception caught in '%hs' - %hs\n"), __FUNCTION__, e.what());	\
+										TRACE2(TXT("WCL::ComException exception caught in '%hs' - %s\n"), __FUNCTION__, e.What());	\
 																							\
-										COM::SetComErrorInfo(__FUNCTION__, e.what());		\
+										COM::SetComErrorInfo(__FUNCTION__, e.What());		\
 																							\
 										retval = e.m_hResult;								\
 									}														\
 									catch (const WCL::Win32Exception& e)					\
 									{														\
-										TRACE2(TXT("WCL::Win32Exception exception caught in '%hs' - %hs\n"), __FUNCTION__, e.what());	\
+										TRACE2(TXT("WCL::Win32Exception exception caught in '%hs' - %s\n"), __FUNCTION__, e.What());	\
 																							\
-										COM::SetComErrorInfo(__FUNCTION__, e.what());		\
+										COM::SetComErrorInfo(__FUNCTION__, e.What());		\
 																							\
 										retval = HRESULT_FROM_WIN32(e.m_dwError);			\
+									}														\
+									catch (const Core::Exception& e)					\
+									{														\
+										TRACE2(TXT("Core::Exception exception caught in '%hs' - %s\n"), __FUNCTION__, e.What());	\
+																							\
+										COM::SetComErrorInfo(__FUNCTION__, e.What());		\
+																							\
+										retval = E_UNEXPECTED;								\
 									}														\
 									catch (const std::exception& e)							\
 									{														\
 										TRACE2(TXT("std::exception caught in '%hs' - %hs\n"), __FUNCTION__, e.what());	\
 																							\
-										COM::SetComErrorInfo(__FUNCTION__, e.what());		\
+										COM::SetComErrorInfo(__FUNCTION__, A2T(e.what()));	\
 																							\
 										retval = E_UNEXPECTED;								\
 									}
