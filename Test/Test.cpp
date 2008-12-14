@@ -19,15 +19,15 @@ extern void TestErrorInfo();
 ////////////////////////////////////////////////////////////////////////////////
 //! The entry point for the test harness.
 
-int _tmain(int /*argc*/, _TCHAR* /*argv*/[])
+int _tmain(int argc, _TCHAR* argv[])
 {
-	TEST_SUITE_BEGIN
+	TEST_SUITE_BEGIN(argc, argv)
 	{
-		TestComUtils();
-		TestObjectBase();
-		TestInprocServer();
-		TestClassFactory();
-		TestErrorInfo();
+		TEST_CASE(TestComUtils);
+		TEST_CASE(TestObjectBase);
+		TEST_CASE(TestInprocServer);
+		TEST_CASE(TestClassFactory);
+		TEST_CASE(TestErrorInfo);
 
 		Core::SetTestRunFinalStatus(true);
 	}
