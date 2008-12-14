@@ -37,7 +37,8 @@
 
 #include <Core/Common.hpp>		// Core library common headers.
 #include <WCL/Common.hpp>		// Windows C++ library common headers.
-#include <WCL/StrConvs.hpp>		// String conversions.
+#include <Core/AnsiWide.hpp>	// String conversions.
+#include <WCL/StringUtils.hpp>	// String conversions.
 
 ////////////////////////////////////////////////////////////////////////////////
 // Library headers.
