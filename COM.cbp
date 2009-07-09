@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="COM" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug Win32">
+				<Option output="Debug\lib" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="Debug" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-D_DEBUG" />
+					<Add option="-D_LIB" />
+					<Add option="-Wall" />
+					<Add option="-O0" />
+					<Add option="-frtti" />
+					<Add directory="..\..\Lib" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="..\..\Lib" />
+				</ResourceCompiler>
+			</Target>
+			<Target title="Release Win32">
+				<Option output="Release\lib" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="Release" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-DNDEBUG" />
+					<Add option="-D_LIB" />
+					<Add option="-Wall" />
+					<Add option="-frtti" />
+					<Add directory="..\..\Lib" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="..\..\Lib" />
+				</ResourceCompiler>
+			</Target>
+		</Build>
+		<Unit filename="ClassFactory.cpp" />
+		<Unit filename="ClassFactory.hpp" />
+		<Unit filename="ComMain.cpp" />
+		<Unit filename="ComMain.hpp" />
+		<Unit filename="ComTypes.hpp" />
+		<Unit filename="ComUtils.cpp" />
+		<Unit filename="ComUtils.hpp" />
+		<Unit filename="Common.hpp" />
+		<Unit filename="Doxygen.cfg" />
+		<Unit filename="ErrorInfo.cpp" />
+		<Unit filename="ErrorInfo.hpp" />
+		<Unit filename="IDispatchImpl.hpp" />
+		<Unit filename="InprocServer.cpp" />
+		<Unit filename="InprocServer.def" />
+		<Unit filename="InprocServer.hpp" />
+		<Unit filename="ObjectBase.hpp" />
+		<Unit filename="ReadMe.txt" />
+		<Unit filename="RegUtils.cpp" />
+		<Unit filename="RegUtils.hpp" />
+		<Unit filename="Server.cpp" />
+		<Unit filename="Server.hpp" />
+		<Unit filename="ServerRegInfo.hpp" />
+		<Unit filename="TODO.txt" />
+		<Unit filename="pch.cpp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
