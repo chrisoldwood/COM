@@ -7,6 +7,10 @@
 #include "ErrorInfo.hpp"
 #include <WCL/ComPtr.hpp>
 
+#ifndef _MSC_VER
+WCL_DECLARE_IFACETRAITS(IErrorInfo, IID_IErrorInfo);
+#endif
+
 namespace COM
 {
 
@@ -32,12 +36,12 @@ bool SetComErrorInfo(const char* pszSource, const tchar* pszDescription)
 //	pCreateErrorInfo->SetGUID();
 	pCreateErrorInfo->SetSource(const_cast<wchar_t*>(A2W(pszSource)));
 	pCreateErrorInfo->SetDescription(const_cast<wchar_t*>(T2W(pszDescription)));
-//	pCreateErrorInfo->SetHelpFile(); 
-//	pCreateErrorInfo->SetHelpContext(); 
-	
-	IErrorInfoPtr pErrorInfo; 
+//	pCreateErrorInfo->SetHelpFile();
+//	pCreateErrorInfo->SetHelpContext();
 
-	hr = pCreateErrorInfo->QueryInterface(AttachTo(pErrorInfo)); 
+	IErrorInfoPtr pErrorInfo;
+
+	hr = QueryInterface(pCreateErrorInfo, pErrorInfo);
 
 	if (FAILED(hr))
 		return false;

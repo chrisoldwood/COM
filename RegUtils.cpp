@@ -41,7 +41,7 @@ void DeleteKey(const tstring& strSubKey)
 	if (!bDeleted)
 	{
 		DWORD dwError = ::GetLastError();
-		TRACE3(TXT("Failed to delete the key 'HKCR\\%s' [0x%08X - %s]\n"), strSubKey.c_str(), dwError, CStrCvt::FormatError(dwError));
+		TRACE3(TXT("Failed to delete the key 'HKCR\\%s' [0x%08X - %s]\n"), strSubKey.c_str(), dwError, CStrCvt::FormatError(dwError).c_str());
 	}
 #endif
 }
@@ -188,7 +188,7 @@ void UnregisterTypeLib(const GUID& rLIBID, ushort nMajor, ushort nMinor)
 #ifdef _DEBUG
 	if (FAILED(hr))
 	{
-		TRACE2(TXT("Failed to unregister the type library [0x%08X - %s]"), hr, CStrCvt::FormatError(hr));
+		TRACE2(TXT("Failed to unregister the type library [0x%08X - %s]"), hr, CStrCvt::FormatError(hr).c_str());
 	}
 #endif
 }

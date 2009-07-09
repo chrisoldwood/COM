@@ -9,9 +9,11 @@
 #include "RegUtils.hpp"
 #include "ClassFactory.hpp"
 
+#ifdef _MSC_VER
 // Linker directives.
 #pragma comment(lib, "ole32")
 #pragma comment(lib, "oleaut32")
+#endif
 
 namespace COM
 {

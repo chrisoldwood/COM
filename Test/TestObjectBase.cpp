@@ -8,6 +8,11 @@
 #include "TestClasses.hpp"
 #include <WCL/ComPtr.hpp>
 
+#ifndef _MSC_VER
+WCL_DECLARE_IFACETRAITS(IUnknown, IID_IUnknown);
+WCL_DECLARE_IFACETRAITS(ITestInterface, IID_ITestInterface);
+#endif
+
 ////////////////////////////////////////////////////////////////////////////////
 //! The unit tests for the COM ObjectBase class.
 
