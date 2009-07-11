@@ -125,12 +125,12 @@ HRESULT COMCALL IDispatchImpl<T>::GetTypeInfo(UINT nInfo, LCID /*dwLCID*/, IType
 			throw WCL::ComException(DISP_E_BADINDEX, TXT("nInfo must be 0"));
 
 		// Load on first request.
-		if (m_pTypeLib.Get() ==  nullptr || m_pTypeInfo.Get() == nullptr)
+		if (m_pTypeLib.get() == nullptr || m_pTypeInfo.get() == nullptr)
 			LoadTypeInfo();
 
 		m_pTypeInfo->AddRef();
 
-		*ppTypeInfo = m_pTypeInfo.Get();
+		*ppTypeInfo = m_pTypeInfo.get();
 	}
 	COM_CATCH(hr)
 
@@ -148,7 +148,7 @@ HRESULT COMCALL IDispatchImpl<T>::GetIDsOfNames(REFIID /*rIID*/, LPOLESTR* aszNa
 	try
 	{
 		// Load on first request.
-		if (m_pTypeLib.Get() ==  nullptr || m_pTypeInfo.Get() == nullptr)
+		if (m_pTypeLib.get() == nullptr || m_pTypeInfo.get() == nullptr)
 			LoadTypeInfo();
 
 		hr = m_pTypeInfo->GetIDsOfNames(aszNames, nNames, alMemberIDs);
@@ -169,7 +169,7 @@ HRESULT COMCALL IDispatchImpl<T>::Invoke(DISPID lMemberID, REFIID /*rIID*/, LCID
 	try
 	{
 		// Load on first request.
-		if (m_pTypeLib.Get() ==  nullptr || m_pTypeInfo.Get() == nullptr)
+		if (m_pTypeLib.get() == nullptr || m_pTypeInfo.get() == nullptr)
 			LoadTypeInfo();
 
 		// Clear the last exception.
@@ -189,11 +189,11 @@ template<typename T>
 void IDispatchImpl<T>::LoadTypeInfo()
 {
 	// Load the type library..
-	if (m_pTypeLib.Get() == nullptr)
+	if (m_pTypeLib.get() == nullptr)
 		m_pTypeLib = COM::Server::This().LoadTypeLibrary();
 
 	// Retrieve the type info for the interface.
-	if (m_pTypeInfo.Get() == nullptr)
+	if (m_pTypeInfo.get() == nullptr)
 	{
 		HRESULT hr = m_pTypeLib->GetTypeInfoOfGuid(m_oDIID, AttachTo(m_pTypeInfo));
 

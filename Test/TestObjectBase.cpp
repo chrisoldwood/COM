@@ -40,17 +40,17 @@ void TestObjectBase()
 
 	p.Release();
 
-	ASSERT(p.Get() == nullptr);
+	ASSERT(p.get() == nullptr);
 
 	p = ITestInterfacePtr(new TestClass, true);
 
 	IUnknownPtr u(p);
 
-	TEST_TRUE(u.Get() != nullptr);
+	TEST_TRUE(u.get() != nullptr);
 	TEST_TRUE(pTestClass->GetRefCount() == 2);
 
 	ITestInterfacePtr t(u);
 
-	TEST_TRUE(t.Get() != nullptr);
+	TEST_TRUE(t.get() != nullptr);
 	TEST_TRUE(pTestClass->GetRefCount() == 3);
 }

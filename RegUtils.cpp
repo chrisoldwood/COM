@@ -169,7 +169,7 @@ void RegisterTypeLib(const tstring& strFile)
 		throw WCL::ComException(hr, CString::Fmt(TXT("Failed to load the type library '%s'"), strFile.c_str()));
 
 	// Register it.
-	hr = ::RegisterTypeLib(pTypeLib.Get(), szFile, nullptr);
+	hr = ::RegisterTypeLib(pTypeLib.get(), szFile, nullptr);
 
 	if (FAILED(hr))
 		throw WCL::ComException(hr, CString::Fmt(TXT("Failed to register the type library '%s'"), strFile.c_str()));

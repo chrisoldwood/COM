@@ -24,25 +24,25 @@ bool SetComErrorInfo(const char* pszSource, const tchar* pszDescription); // thr
 #define COM_CATCH(retval)																	\
 									catch (const WCL::ComException& e)						\
 									{														\
-										TRACE2(TXT("WCL::ComException exception caught in '%hs' - %s\n"), __FUNCTION__, e.What());	\
+										TRACE2(TXT("WCL::ComException exception caught in '%hs' - %s\n"), __FUNCTION__, e.twhat());	\
 																							\
-										COM::SetComErrorInfo(__FUNCTION__, e.What());		\
+										COM::SetComErrorInfo(__FUNCTION__, e.twhat());		\
 																							\
 										retval = e.m_hResult;								\
 									}														\
 									catch (const WCL::Win32Exception& e)					\
 									{														\
-										TRACE2(TXT("WCL::Win32Exception exception caught in '%hs' - %s\n"), __FUNCTION__, e.What());	\
+										TRACE2(TXT("WCL::Win32Exception exception caught in '%hs' - %s\n"), __FUNCTION__, e.twhat());	\
 																							\
-										COM::SetComErrorInfo(__FUNCTION__, e.What());		\
+										COM::SetComErrorInfo(__FUNCTION__, e.twhat());		\
 																							\
 										retval = HRESULT_FROM_WIN32(e.m_dwError);			\
 									}														\
 									catch (const Core::Exception& e)					\
 									{														\
-										TRACE2(TXT("Core::Exception exception caught in '%hs' - %s\n"), __FUNCTION__, e.What());	\
+										TRACE2(TXT("Core::Exception exception caught in '%hs' - %s\n"), __FUNCTION__, e.twhat());	\
 																							\
-										COM::SetComErrorInfo(__FUNCTION__, e.What());		\
+										COM::SetComErrorInfo(__FUNCTION__, e.twhat());		\
 																							\
 										retval = E_UNEXPECTED;								\
 									}														\

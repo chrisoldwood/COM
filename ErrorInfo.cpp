@@ -47,7 +47,7 @@ bool SetComErrorInfo(const char* pszSource, const tchar* pszDescription)
 		return false;
 
 	// Throw it.
-	hr = ::SetErrorInfo(0, pErrorInfo.Get());
+	hr = ::SetErrorInfo(0, pErrorInfo.get());
 
 	if (FAILED(hr))
 		return false;

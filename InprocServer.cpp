@@ -70,7 +70,7 @@ HRESULT InprocServer::DllGetClassObject(REFCLSID roCLSID, REFIID roIID, LPVOID* 
 		// Create the class factory.
 		IClassFactoryPtr pFactory = CreateClassFactory(roCLSID);
 
-		if (pFactory.Get() != nullptr)
+		if (pFactory.get() != nullptr)
 			hr = pFactory->QueryInterface(roIID, ppFactory);
 	}
 	COM_CATCH(hr)

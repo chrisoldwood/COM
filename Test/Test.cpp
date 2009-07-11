@@ -29,7 +29,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		TEST_CASE(TestClassFactory);
 		TEST_CASE(TestErrorInfo);
 
-		Core::SetTestRunFinalStatus(true);
+		Core::setTestRunFinalStatus(true);
 	}
 	TEST_SUITE_END
 }

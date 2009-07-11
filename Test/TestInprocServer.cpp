@@ -38,5 +38,5 @@ void TestInprocServer()
 
 	CModule oModule(::GetModuleHandle(NULL));
 
-	TEST_TRUE(oServer.LoadTypeLibrary().Get() != nullptr);
+	TEST_TRUE(oServer.LoadTypeLibrary().get() != nullptr);
 }

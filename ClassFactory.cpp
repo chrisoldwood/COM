@@ -49,7 +49,7 @@ HRESULT COMCALL ClassFactory::CreateInstance(IUnknown* pOuter, const IID& rIID, 
 		// Create the object.
 		IUnknownPtr pUnknown = InprocServer::This().CreateObject(m_oCLSID);
 
-		if (pUnknown.Get() != nullptr)
+		if (pUnknown.get() != nullptr)
 			hr = pUnknown->QueryInterface(rIID, ppInterface);
 	}
 	COM_CATCH(hr)
