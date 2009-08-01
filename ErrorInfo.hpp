@@ -28,7 +28,7 @@ bool SetComErrorInfo(const char* pszSource, const tchar* pszDescription); // thr
 																							\
 										COM::SetComErrorInfo(__FUNCTION__, e.twhat());		\
 																							\
-										retval = e.m_hResult;								\
+										retval = e.m_result;								\
 									}														\
 									catch (const WCL::Win32Exception& e)					\
 									{														\
