@@ -7,10 +7,7 @@
 #include <Core/UnitTest.hpp>
 #include "TestClasses.hpp"
 
-////////////////////////////////////////////////////////////////////////////////
-//! The unit tests for the COM ObjectBase class.
-
-void TestInprocServer()
+TEST_SET(InprocServer)
 {
 	typedef WCL::IFacePtr<ITestInterface> ITestInterfacePtr;
 
@@ -40,3 +37,4 @@ void TestInprocServer()
 
 	TEST_TRUE(oServer.LoadTypeLibrary().get() != nullptr);
 }
+TEST_SET_END

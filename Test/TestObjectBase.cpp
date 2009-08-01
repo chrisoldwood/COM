@@ -13,10 +13,7 @@ WCL_DECLARE_IFACETRAITS(IUnknown, IID_IUnknown);
 WCL_DECLARE_IFACETRAITS(ITestInterface, IID_ITestInterface);
 #endif
 
-////////////////////////////////////////////////////////////////////////////////
-//! The unit tests for the COM ObjectBase class.
-
-void TestObjectBase()
+TEST_SET(ObjectBase)
 {
 	typedef WCL::ComPtr<IUnknown> IUnknownPtr;
 	typedef WCL::ComPtr<ITestInterface> ITestInterfacePtr;
@@ -54,3 +51,4 @@ void TestObjectBase()
 	TEST_TRUE(t.get() != nullptr);
 	TEST_TRUE(pTestClass->GetRefCount() == 3);
 }
+TEST_SET_END

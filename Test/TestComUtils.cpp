@@ -7,10 +7,7 @@
 #include <Core/UnitTest.hpp>
 #include <COM/ComUtils.hpp>
 
-////////////////////////////////////////////////////////////////////////////////
-//! The unit tests for the COM util functions.
-
-void TestComUtils()
+TEST_SET(ComUtils)
 {
 	GUID  oGUID  = { 0x12345678, 0x1234, 0x1234, { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08 } };
 	CLSID oCLSID = { 0x0000031A, 0x0000, 0x0000, { 0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46 } };
@@ -20,3 +17,4 @@ void TestComUtils()
 	TEST_TRUE(COM::LookupCLSID(oCLSID) == TXT("ClassMoniker"));
 	TEST_TRUE(COM::LookupIID(oIID) == TXT("IUnknown"));
 }
+TEST_SET_END

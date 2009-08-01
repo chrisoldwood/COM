@@ -9,10 +9,7 @@
 #include <WCL/ComPtr.hpp>
 #include <COM/ClassFactory.hpp>
 
-////////////////////////////////////////////////////////////////////////////////
-//! The unit tests for the ClassFactory class.
-
-void TestClassFactory()
+TEST_SET(ClassFactory)
 {
 	typedef WCL::ComPtr<IClassFactory> IClassFactoryPtr;
 	typedef WCL::ComPtr<ITestInterface> ITestInterfacePtr;
@@ -38,3 +35,4 @@ void TestClassFactory()
 
 	TEST_TRUE(oServer.LockCount() == 0);
 }
+TEST_SET_END

@@ -8,10 +8,7 @@
 #include <WCL/ComPtr.hpp>
 #include <WCL/ComStr.hpp>
 
-////////////////////////////////////////////////////////////////////////////////
-//! The unit tests for the SetComErrorInfo function.
-
-void TestErrorInfo()
+TEST_SET(ErrorInfo)
 {
 	typedef WCL::ComPtr<IErrorInfo> IErrorInfoPtr;
 
@@ -31,7 +28,7 @@ void TestErrorInfo()
 	TEST_TRUE(oGUID == GUID_NULL);
 
 	TEST_TRUE(pErrorInfo->GetSource(AttachTo(bstrSource)) == S_OK);
-	TEST_TRUE(wcscmp(bstrSource.Get(), L"TestErrorInfo") == 0);
+	TEST_TRUE(wcscmp(bstrSource.Get(), A2W(__FUNCTION__)) == 0);
 
 	TEST_TRUE(pErrorInfo->GetDescription(AttachTo(bstrDescription)) == S_OK);
 	TEST_TRUE(wcscmp(bstrDescription.Get(), L"Description") == 0);
@@ -42,3 +39,4 @@ void TestErrorInfo()
 	TEST_TRUE(pErrorInfo->GetHelpContext(&dwHelpContext) == S_OK);
 	TEST_TRUE(dwHelpContext == 0);
 }
+TEST_SET_END
