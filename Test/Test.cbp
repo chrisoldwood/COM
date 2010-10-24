@@ -56,12 +56,12 @@
 		<Unit filename="Test.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
-		<Unit filename="TestClassFactory.cpp" />
+		<Unit filename="ClassFactoryTests.cpp" />
 		<Unit filename="TestClasses.hpp" />
-		<Unit filename="TestComUtils.cpp" />
-		<Unit filename="TestErrorInfo.cpp" />
-		<Unit filename="TestInprocServer.cpp" />
-		<Unit filename="TestObjectBase.cpp" />
+		<Unit filename="ComUtilsTests.cpp" />
+		<Unit filename="ErrorInfoTests.cpp" />
+		<Unit filename="InprocServerTests.cpp" />
+		<Unit filename="ObjectBaseTests.cpp" />
 		<Unit filename="resource.h" />
 		<Unit filename="stdafx.cpp" />
 		<Unit filename="stdafx.h" />

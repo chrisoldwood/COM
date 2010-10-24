@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
-//! \file   TestInprocServer.cpp
+//! \file   InprocServerTests.cpp
 //! \brief  The unit tests for the InprocServer class.
 //! \author Chris Oldwood
 
@@ -9,32 +9,41 @@
 
 TEST_SET(InprocServer)
 {
-	typedef WCL::IFacePtr<ITestInterface> ITestInterfacePtr;
 
-	TestServer oServer;
+TEST_CASE("locking and unlocking the server modifies the lock count")
+{
+	TestServer server;
 
-	TEST_TRUE(oServer.LockCount() == 0);
+	long count = server.LockCount();
 
-	TestClass* pTestClass = new TestClass;
-	ITestInterfacePtr p(pTestClass, true);
+	server.Lock();
 
-	TEST_TRUE(oServer.LockCount() == 1);
+	TEST_TRUE(server.LockCount() == count+1);
 
-	ITestInterfacePtr p2(p);
-	ASSERT(pTestClass->GetRefCount() == 2);
+	server.Unlock();
 
-	TEST_TRUE(oServer.LockCount() == 1);
+	TEST_TRUE(server.LockCount() == count);
+}
+TEST_CASE_END
 
-	p2.Release();
+TEST_CASE("this provides access to the current global instance")
+{
+	TestServer server;
 
-	TEST_TRUE(oServer.LockCount() == 1);
+	TEST_TRUE(&COM::InprocServer::This() == &server);
+	TEST_TRUE(&COM::Server::This() == &server);
+}
+TEST_CASE_END
 
-	p.Release();
+TEST_CASE("loading the type library returns a valid object")
+{
+	TestServer server;
 
-	TEST_TRUE(oServer.LockCount() == 0);
+	CModule oModule(::GetModuleHandle(NULL)); // Simulate DLL load/unload.
 
-	CModule oModule(::GetModuleHandle(NULL));
+	TEST_TRUE(server.LoadTypeLibrary().get() != nullptr);
+}
+TEST_CASE_END
 
-	TEST_TRUE(oServer.LoadTypeLibrary().get() != nullptr);
 }
 TEST_SET_END

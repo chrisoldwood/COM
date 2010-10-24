@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
-//! \file   TestClassFactory.cpp
+//! \file   ClassFactoryTests.cpp
 //! \brief  The unit tests for the ClassFactory class.
 //! \author Chris Oldwood
 
@@ -14,25 +14,51 @@ TEST_SET(ClassFactory)
 	typedef WCL::ComPtr<IClassFactory> IClassFactoryPtr;
 	typedef WCL::ComPtr<ITestInterface> ITestInterfacePtr;
 
-	TestServer oServer;
+TEST_CASE("creating and destroying class factory modifies the server lock count")
+{
+	TestServer server;
 
-	IClassFactoryPtr p(new COM::ClassFactory(CLSID_TestClass), true);	
+	long count = server.LockCount();
 
-	TEST_TRUE(oServer.LockCount() == 1);
+	IClassFactoryPtr factory(new COM::ClassFactory(CLSID_TestClass), true);	
 
-	p->LockServer(TRUE);
+	TEST_TRUE(server.LockCount() == count+1);
 
-	TEST_TRUE(oServer.LockCount() == 2);
+	factory.Release();
 
+	TEST_TRUE(server.LockCount() == count);
+}
+TEST_CASE_END
+
+TEST_CASE("locking the server modifies the server lock count")
+{
+	TestServer       server;
+	IClassFactoryPtr factory(new COM::ClassFactory(CLSID_TestClass), true);	
+
+	long count = server.LockCount();
+
+	factory->LockServer(TRUE);
+
+	TEST_TRUE(server.LockCount() == count+1);
+
+	factory->LockServer(FALSE);
+
+	TEST_TRUE(server.LockCount() == count);
+}
+TEST_CASE_END
+
+TEST_CASE("creating an instance returns S_OK and a new object")
+{
+	TestServer        server;
+	IClassFactoryPtr  factory(new COM::ClassFactory(CLSID_TestClass), true);	
 	ITestInterfacePtr t;
 
-	TEST_TRUE(p->CreateInstance(nullptr, IID_ITestInterface, reinterpret_cast<void**>(AttachTo(t))) == S_OK);
-	TEST_TRUE(oServer.LockCount() == 3);
+	HRESULT result = factory->CreateInstance(nullptr, IID_ITestInterface, reinterpret_cast<void**>(AttachTo(t)));
 
-	t.Release();
-	p->LockServer(FALSE);
-	p.Release();
+	TEST_TRUE(result == S_OK);
+	TEST_TRUE(t.get() != nullptr);
+}
+TEST_CASE_END
 
-	TEST_TRUE(oServer.LockCount() == 0);
 }
 TEST_SET_END

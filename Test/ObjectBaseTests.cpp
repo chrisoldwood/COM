@@ -1,11 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////
-//! \file   TestObjectBase.cpp
+//! \file   ObjectBaseTests.cpp
 //! \brief  The unit tests for the ObjectBase class.
 //! \author Chris Oldwood
 
 #include "stdafx.h"
 #include <Core/UnitTest.hpp>
 #include "TestClasses.hpp"
+#include <COM/ClassFactory.hpp>
 #include <WCL/ComPtr.hpp>
 
 #ifndef _MSC_VER
@@ -17,38 +18,69 @@ TEST_SET(ObjectBase)
 {
 	typedef WCL::ComPtr<IUnknown> IUnknownPtr;
 	typedef WCL::ComPtr<ITestInterface> ITestInterfacePtr;
+	typedef WCL::ComPtr<IClassFactory> IClassFactoryPtr;
 
-	TestServer oServer;
-	TestClass* pTestClass = new TestClass;
+TEST_CASE("new object begins with zero reference count")
+{
+	TestServer server;
+	TestClass* object = new TestClass;
 
-	TEST_TRUE(pTestClass->GetRefCount() == 0);
+	TEST_TRUE(object->GetRefCount() == 0);
+}
+TEST_CASE_END
 
-	ITestInterfacePtr p(pTestClass, true);
+TEST_CASE("acquiring and releasing an interfaces modifies the reference count")
+{
+	TestServer server;
+	TestClass* object = new TestClass;
 
-	TEST_TRUE(pTestClass->GetRefCount() == 1);
+	ulong count = object->GetRefCount();
 
-	ITestInterfacePtr p2(p);
+	ITestInterfacePtr iface1(object, true);
 
-	TEST_TRUE(pTestClass->GetRefCount() == 2);
+	TEST_TRUE(object->GetRefCount() == count+1);
 
-	p2.Release();
+	ITestInterfacePtr iface2(iface1);
 
-	TEST_TRUE(pTestClass->GetRefCount() == 1);
+	TEST_TRUE(object->GetRefCount() == count+2);
 
-	p.Release();
+	iface1.Release();
 
-	ASSERT(p.get() == nullptr);
+	TEST_TRUE(object->GetRefCount() == count+1);
 
-	p = ITestInterfacePtr(new TestClass, true);
+	iface2.Release();
+}
+TEST_CASE_END
 
-	IUnknownPtr u(p);
+TEST_CASE("IUnknown can be acquired via any interface")
+{
+	TestServer        server;
+	TestClass*        object(new TestClass);
+	ITestInterfacePtr iface(object, true);
 
-	TEST_TRUE(u.get() != nullptr);
-	TEST_TRUE(pTestClass->GetRefCount() == 2);
+	IUnknownPtr unknown(iface);
 
-	ITestInterfacePtr t(u);
+	TEST_TRUE(unknown.get() != nullptr);
+}
+TEST_CASE_END
 
-	TEST_TRUE(t.get() != nullptr);
-	TEST_TRUE(pTestClass->GetRefCount() == 3);
+TEST_CASE("creating and destroying an object modifies the server lock count")
+{
+	TestServer        server;
+	IClassFactoryPtr  factory(new COM::ClassFactory(CLSID_TestClass), true);	
+	ITestInterfacePtr t;
+
+	long count = server.LockCount();
+
+	factory->CreateInstance(nullptr, IID_ITestInterface, reinterpret_cast<void**>(AttachTo(t)));
+
+	TEST_TRUE(server.LockCount() == count+1);
+
+	t.Release();
+
+	TEST_TRUE(server.LockCount() == count);
+}
+TEST_CASE_END
+
 }
 TEST_SET_END

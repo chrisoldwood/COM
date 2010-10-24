@@ -156,19 +156,19 @@
 				RelativePath=".\Test.cpp">
 			</File>
 			<File
-				RelativePath=".\TestClassFactory.cpp">
+				RelativePath=".\ClassFactoryTests.cpp">
 			</File>
 			<File
-				RelativePath=".\TestComUtils.cpp">
+				RelativePath=".\ComUtilsTests.cpp">
 			</File>
 			<File
-				RelativePath=".\TestErrorInfo.cpp">
+				RelativePath=".\ErrorInfoTests.cpp">
 			</File>
 			<File
-				RelativePath=".\TestInprocServer.cpp">
+				RelativePath=".\InprocServerTests.cpp">
 			</File>
 			<File
-				RelativePath=".\TestObjectBase.cpp">
+				RelativePath=".\ObjectBaseTests.cpp">
 			</File>
 			<File
 				RelativePath=".\TypeLibrary.idl">
