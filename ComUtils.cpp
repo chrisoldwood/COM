@@ -4,6 +4,7 @@
 //! \author Chris Oldwood
 
 #include "Common.hpp"
+#include "ComUtils.hpp"
 #include <WCL/RegKey.hpp>
 #include <Core/AnsiWide.hpp>
 #include <Core/BadLogicException.hpp>

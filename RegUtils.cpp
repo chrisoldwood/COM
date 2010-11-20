@@ -15,7 +15,7 @@ namespace COM
 ////////////////////////////////////////////////////////////////////////////////
 //! Creates or updates the default value for a registry key under the HKCR tree.
 
-void SetRegistryValue(const tstring& strSubKey, const tstring& strValue)
+static void SetRegistryValue(const tstring& strSubKey, const tstring& strValue)
 {
 	WCL::RegKey::WriteKeyDefaultValue(HKEY_CLASSES_ROOT, strSubKey.c_str(), strValue.c_str());
 }
@@ -23,7 +23,7 @@ void SetRegistryValue(const tstring& strSubKey, const tstring& strValue)
 ////////////////////////////////////////////////////////////////////////////////
 //! Creates or updates a named value for a registry key under the HKCR tree.
 
-void SetRegistryValue(const tstring& strSubKey, const tstring& strName, const tstring& strValue)
+static void SetRegistryValue(const tstring& strSubKey, const tstring& strName, const tstring& strValue)
 {
 	WCL::RegKey::WriteKeyStringValue(HKEY_CLASSES_ROOT, strSubKey.c_str(), strName.c_str(), strValue.c_str());
 }
@@ -31,7 +31,7 @@ void SetRegistryValue(const tstring& strSubKey, const tstring& strName, const ts
 ////////////////////////////////////////////////////////////////////////////////
 //! Deletes the key from under the HKCR tree.
 
-void DeleteKey(const tstring& strSubKey)
+static void DeleteKey(const tstring& strSubKey)
 {
 	bool bDeleted = false;
 
@@ -49,7 +49,7 @@ void DeleteKey(const tstring& strSubKey)
 ////////////////////////////////////////////////////////////////////////////////
 //! Get the registry key name used for configuring the server type.
 
-const tchar* GetServerTypeKey(ServerType eType)
+static const tchar* GetServerTypeKey(ServerType eType)
 {
 	const tchar* pszType = TXT("");
 
@@ -66,7 +66,7 @@ const tchar* GetServerTypeKey(ServerType eType)
 ////////////////////////////////////////////////////////////////////////////////
 //! Get the registry key name used for configuring the threading model.
 
-const tchar* GetThreadModelKey(ThreadingModel eModel)
+static const tchar* GetThreadModelKey(ThreadingModel eModel)
 {
 	const tchar* pszModel = TXT("");
 

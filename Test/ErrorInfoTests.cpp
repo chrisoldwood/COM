@@ -8,6 +8,11 @@
 #include <WCL/ComPtr.hpp>
 #include <WCL/ComStr.hpp>
 
+#if __GNUC__
+// missing initializer for member 'X'
+#pragma GCC diagnostic ignored "-Wmissing-field-initializers"
+#endif
+
 TEST_SET(ErrorInfo)
 {
 	typedef WCL::ComPtr<IErrorInfo> IErrorInfoPtr;

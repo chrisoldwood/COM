@@ -14,11 +14,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 // COM inproc server function entry points.
 
+#if !defined(__GNUC__) || !defined(_OBJBASE_H)
+
 //! Entry point for obtaining the class factory.
 STDAPI DllGetClassObject(REFCLSID oCLSID, REFIID oIID, LPVOID* ppFactory);
 
 //! Entry point for querying if the server can be unloaded..
 STDAPI DllCanUnloadNow(void);
+
+#endif
 
 //! Entry point for registering the inproc server.
 STDAPI DllRegisterServer(void);

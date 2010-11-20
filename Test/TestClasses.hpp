@@ -31,6 +31,7 @@ static const GUID LIBID_TestServerLib = { 0x12345678, 0x1234, 0x1234, { 0x01, 0x
 #endif
 struct ITestInterface : public IUnknown
 {
+	virtual ~ITestInterface() {}
 };
 
 ////////////////////////////////////////////////////////////////////////////////
