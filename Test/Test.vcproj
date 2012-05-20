@@ -43,7 +43,8 @@
 			<Tool
 				Name="VCLinkerTool"
 				GenerateDebugInformation="TRUE"
-				SubSystem="1"/>
+				SubSystem="1"
+				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				TypeLibraryName="$(ProjectName).tlb"/>
@@ -138,6 +139,21 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
+				RelativePath=".\ClassFactoryTests.cpp">
+			</File>
+			<File
+				RelativePath=".\ComUtilsTests.cpp">
+			</File>
+			<File
+				RelativePath=".\ErrorInfoTests.cpp">
+			</File>
+			<File
+				RelativePath=".\InprocServerTests.cpp">
+			</File>
+			<File
+				RelativePath=".\ObjectBaseTests.cpp">
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -154,21 +170,6 @@
 			</File>
 			<File
 				RelativePath=".\Test.cpp">
-			</File>
-			<File
-				RelativePath=".\ClassFactoryTests.cpp">
-			</File>
-			<File
-				RelativePath=".\ComUtilsTests.cpp">
-			</File>
-			<File
-				RelativePath=".\ErrorInfoTests.cpp">
-			</File>
-			<File
-				RelativePath=".\InprocServerTests.cpp">
-			</File>
-			<File
-				RelativePath=".\ObjectBaseTests.cpp">
 			</File>
 			<File
 				RelativePath=".\TypeLibrary.idl">
