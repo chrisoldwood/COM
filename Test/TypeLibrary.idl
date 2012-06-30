@@ -2,6 +2,8 @@
 //! \file   TypeLibrary.idl
 //! \brief  The unit test type library.
 //! \author Chris Oldwood
+//! \note   To generate the type library when using GCC invoke:-
+//!         midl /nologo /env win32 /tlb "Test.tlb" /h "Test_h.h" TypeLibrary.idl
 
 [
 	uuid(31F6B1BD-E2C4-4d64-A28A-66BFC42E22CC),
