@@ -12,13 +12,14 @@
 				<Option external_deps="..\..\Core\Debug\libCore.a;..\..\WCL\Debug\libWCL.a;..\..\COM\Debug\libCOM.a;" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="2" />
 				<Compiler>
 					<Add option="-D_DEBUG" />
 				</Compiler>
 				<Linker>
-					<Add library="..\..\Core\Debug\libCore.a" />
-					<Add library="..\..\WCL\Debug\libWCL.a" />
 					<Add library="..\..\COM\Debug\libCOM.a" />
+					<Add library="..\..\WCL\Debug\libWCL.a" />
+					<Add library="..\..\Core\Debug\libCore.a" />
 				</Linker>
 			</Target>
 			<Target title="Release Win32">
@@ -27,14 +28,15 @@
 				<Option external_deps="..\..\Core\Release\libCore.a;..\..\WCL\Release\libWCL.a;..\..\COM\Release\libCOM.a;" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="2" />
 				<Compiler>
 					<Add option="-O" />
 					<Add option="-DNDEBUG" />
 				</Compiler>
 				<Linker>
-					<Add library="..\..\Core\Release\libCore.a" />
-					<Add library="..\..\WCL\Release\libWCL.a" />
 					<Add library="..\..\COM\Release\libCOM.a" />
+					<Add library="..\..\WCL\Release\libWCL.a" />
+					<Add library="..\..\Core\Release\libCore.a" />
 				</Linker>
 			</Target>
 		</Build>
@@ -57,6 +59,14 @@
 		<ResourceCompiler>
 			<Add directory="..\..\..\Lib" />
 		</ResourceCompiler>
+		<Linker>
+			<Add library="liboleaut32.a" />
+			<Add library="libuuid.a" />
+			<Add library="libole32.a" />
+			<Add library="libcomdlg32.a" />
+			<Add library="libgdi32.a" />
+			<Add library="libshlwapi.a" />
+		</Linker>
 		<Unit filename="ClassFactoryTests.cpp" />
 		<Unit filename="ComUtilsTests.cpp" />
 		<Unit filename="ErrorInfoTests.cpp" />
@@ -67,6 +77,7 @@
 			<Option compilerVar="WINDRES" />
 		</Unit>
 		<Unit filename="TestClasses.hpp" />
+		<Unit filename="TypeLibrary.idl" />
 		<Unit filename="resource.h" />
 		<Unit filename="stdafx.cpp" />
 		<Unit filename="stdafx.h" />
