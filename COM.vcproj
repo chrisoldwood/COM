@@ -108,26 +108,10 @@
 	</References>
 	<Files>
 		<Filter
-			Name="Source Files"
-			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
+			Name="Build"
+			Filter="">
 			<File
-				RelativePath=".\ClassFactory.cpp">
-			</File>
-			<File
-				RelativePath=".\ComMain.cpp">
-			</File>
-			<File
-				RelativePath=".\ComUtils.cpp">
-			</File>
-			<File
-				RelativePath=".\ErrorInfo.cpp">
-			</File>
-			<File
-				RelativePath=".\InprocServer.cpp">
-			</File>
-			<File
-				RelativePath=".\InprocServer.def">
+				RelativePath=".\Common.hpp">
 			</File>
 			<File
 				RelativePath=".\pch.cpp">
@@ -144,31 +128,27 @@
 						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 			</File>
-			<File
-				RelativePath=".\RegUtils.cpp">
-			</File>
-			<File
-				RelativePath=".\Server.cpp">
-			</File>
 		</Filter>
 		<Filter
-			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			Name="Core"
+			Filter="">
+			<File
+				RelativePath=".\ClassFactory.cpp">
+			</File>
 			<File
 				RelativePath=".\ClassFactory.hpp">
-			</File>
-			<File
-				RelativePath=".\ComMain.hpp">
-			</File>
-			<File
-				RelativePath=".\Common.hpp">
 			</File>
 			<File
 				RelativePath=".\ComTypes.hpp">
 			</File>
 			<File
+				RelativePath=".\ComUtils.cpp">
+			</File>
+			<File
 				RelativePath=".\ComUtils.hpp">
+			</File>
+			<File
+				RelativePath=".\ErrorInfo.cpp">
 			</File>
 			<File
 				RelativePath=".\ErrorInfo.hpp">
@@ -177,26 +157,46 @@
 				RelativePath=".\IDispatchImpl.hpp">
 			</File>
 			<File
-				RelativePath=".\InprocServer.hpp">
-			</File>
-			<File
 				RelativePath=".\ObjectBase.hpp">
 			</File>
 			<File
-				RelativePath=".\RegUtils.hpp">
+				RelativePath=".\RegUtils.cpp">
 			</File>
 			<File
-				RelativePath=".\Server.hpp">
+				RelativePath=".\RegUtils.hpp">
 			</File>
 			<File
 				RelativePath=".\ServerRegInfo.hpp">
 			</File>
 		</Filter>
 		<Filter
-			Name="Resource Files"
-			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
+			Name="Server"
+			Filter="">
+			<File
+				RelativePath=".\ComMain.cpp">
+			</File>
+			<File
+				RelativePath=".\ComMain.hpp">
+			</File>
+			<File
+				RelativePath=".\InprocServer.cpp">
+			</File>
+			<File
+				RelativePath=".\InprocServer.def">
+			</File>
+			<File
+				RelativePath=".\InprocServer.hpp">
+			</File>
+			<File
+				RelativePath=".\Server.cpp">
+			</File>
+			<File
+				RelativePath=".\Server.hpp">
+			</File>
 		</Filter>
+		<File
+			RelativePath=".\DevNotes.txt">
+		</File>
 		<File
 			RelativePath=".\Doxygen.cfg">
 		</File>

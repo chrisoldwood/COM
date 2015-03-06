@@ -26,6 +26,8 @@ TEST_CASE("new object begins with zero reference count")
 	TestClass* object = new TestClass;
 
 	TEST_TRUE(object->GetRefCount() == 0);
+
+	delete object;
 }
 TEST_CASE_END
 
