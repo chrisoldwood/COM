@@ -55,6 +55,7 @@
 		<Unit filename="ComUtils.cpp" />
 		<Unit filename="ComUtils.hpp" />
 		<Unit filename="Common.hpp" />
+		<Unit filename="DevNotes.txt" />
 		<Unit filename="Doxygen.cfg" />
 		<Unit filename="ErrorInfo.cpp" />
 		<Unit filename="ErrorInfo.hpp" />
