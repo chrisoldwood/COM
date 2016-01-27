@@ -7,7 +7,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug Win32">
-				<Option output="Debug\libCOM" prefix_auto="1" extension_auto="1" />
+				<Option output="Debug/COM" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="" />
 				<Option object_output="Debug" />
 				<Option type="2" />
@@ -19,7 +19,7 @@
 				</Compiler>
 			</Target>
 			<Target title="Release Win32">
-				<Option output="Release\libCOM" prefix_auto="1" extension_auto="1" />
+				<Option output="Release/COM" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="" />
 				<Option object_output="Release" />
 				<Option type="2" />
@@ -45,7 +45,7 @@
 			<Add option="-Werror" />
 			<Add option="-DWIN32" />
 			<Add option="-D_LIB" />
-			<Add directory="..\..\Lib" />
+			<Add directory="../../Lib" />
 		</Compiler>
 		<Unit filename="ClassFactory.cpp" />
 		<Unit filename="ClassFactory.hpp" />
@@ -75,6 +75,7 @@
 		<Extensions>
 			<code_completion />
 			<debugger />
+			<envvars />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
