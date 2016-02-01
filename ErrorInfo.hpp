@@ -38,7 +38,7 @@ bool SetComErrorInfo(const char* pszSource, const tchar* pszDescription); // thr
 																							\
 										retval = HRESULT_FROM_WIN32(e.m_dwError);			\
 									}														\
-									catch (const Core::Exception& e)					\
+									catch (const Core::Exception& e)						\
 									{														\
 										TRACE2(TXT("Core::Exception exception caught in '%hs' - %s\n"), __FUNCTION__, e.twhat());	\
 																							\
@@ -51,6 +51,15 @@ bool SetComErrorInfo(const char* pszSource, const tchar* pszDescription); // thr
 										TRACE2(TXT("std::exception caught in '%hs' - %hs\n"), __FUNCTION__, e.what());	\
 																							\
 										COM::SetComErrorInfo(__FUNCTION__, A2T(e.what()));	\
+																							\
+										retval = E_UNEXPECTED;								\
+									}														\
+									catch (...)												\
+									{														\
+										const tchar* what = TXT("Unknown exception");		\
+										TRACE1(TXT("Unknown exception caught in '%hs'\n"), __FUNCTION__);	\
+																							\
+										COM::SetComErrorInfo(__FUNCTION__, what);			\
 																							\
 										retval = E_UNEXPECTED;								\
 									}
