@@ -73,3 +73,20 @@ STDAPI DllUnregisterServer(void)
 
 	return hr;
 }
+
+////////////////////////////////////////////////////////////////////////////////
+//! Newer entry point for registering and unregistering the inproc server.
+
+STDAPI DllInstall(BOOL install, const tchar* cmdLine)
+{
+	HRESULT hr = E_FAIL;
+
+	try
+	{
+		// Forward to inproc server singleton.
+		hr = COM::InprocServer::This().DllInstall(install, cmdLine);
+	}
+	COM_CATCH(hr)
+
+	return hr;
+}

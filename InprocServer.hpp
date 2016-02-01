@@ -56,6 +56,9 @@ protected:
 	//! Unregister the server from the registry.
 	virtual HRESULT DllUnregisterServer();
 
+	//! Register or unregister the server to/from the registry.
+	virtual HRESULT DllInstall(bool install, const tchar* cmdLine);
+
 	//
 	// Internal methods.
 	//
@@ -88,7 +91,14 @@ private:
 	friend HRESULT STDAPICALLTYPE ::DllCanUnloadNow(void);
 	friend HRESULT STDAPICALLTYPE ::DllRegisterServer(void);
 	friend HRESULT STDAPICALLTYPE ::DllUnregisterServer(void);
+	friend HRESULT STDAPICALLTYPE ::DllInstall(BOOL, const tchar*);
 	friend class ClassFactory;
+
+	//! Register the server in the registry.
+	HRESULT RegisterServer(bool perUser);
+
+	//! Unregister the server from the registry.
+	HRESULT UnregisterServer(bool perUser);
 };
 
 ////////////////////////////////////////////////////////////////////////////////

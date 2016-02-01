@@ -30,4 +30,7 @@ STDAPI DllRegisterServer(void);
 //! Entry point for unregistering the inproc server.
 STDAPI DllUnregisterServer(void);
 
+//! Newer entry point for registering and unregistering the inproc server.
+STDAPI DllInstall(BOOL install, const tchar* cmdLine);
+
 #endif // COM_COMMAIN_HPP

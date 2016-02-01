@@ -18,37 +18,46 @@ namespace COM
 class ServerRegInfo;
 
 ////////////////////////////////////////////////////////////////////////////////
+//! The scope used for registration.
+
+enum Scope
+{
+	MACHINE = 1,	//!< Register in HKEY_LOCAL_MACHINE (HKEY_CLASSES_ROOT).
+	USER = 2,		//!< Register in HKEY_CURRENT_USER\Software\Classes.
+};
+
+////////////////////////////////////////////////////////////////////////////////
 // Register a CLSID.
 
-void RegisterCLSID(const ServerRegInfo& rSvrInfo, const CLSID& rCLSID,
+void RegisterCLSID(Scope scope, const ServerRegInfo& rSvrInfo, const CLSID& rCLSID,
 					const tstring& strClass, const tstring& strVersion,
 					ThreadingModel eModel); // throw(RegistryException, ComException)
 
 ////////////////////////////////////////////////////////////////////////////////
 // Unregister a CLSID.
 
-void UnregisterCLSID(const ServerRegInfo& rSvrInfo, const CLSID& rCLSID,
+void UnregisterCLSID(Scope scope, const ServerRegInfo& rSvrInfo, const CLSID& rCLSID,
 					const tstring& strClass, const tstring& strVersion); // throw(RegistryException, ComException)
 
 ////////////////////////////////////////////////////////////////////////////////
 // Register a type library.
 
-void RegisterTypeLib(const tstring& strFile); // throw(ComException)
+void RegisterTypeLib(Scope scope, const tstring& strFile); // throw(ComException)
 
 ////////////////////////////////////////////////////////////////////////////////
 // Unregister a type library.
 
-void UnregisterTypeLib(const GUID& rLIBID, ushort nMajor, ushort nMinor); // throw(ComException)
+void UnregisterTypeLib(Scope scope, const GUID& rLIBID, ushort nMajor, ushort nMinor); // throw(ComException)
 
 ////////////////////////////////////////////////////////////////////////////////
 // Register a Moniker prefix.
 
-void RegisterMonikerPrefix(const tstring& strPrefix, const tstring& strClass, const CLSID& rCLSID);
+void RegisterMonikerPrefix(Scope scope, const tstring& strPrefix, const tstring& strClass, const CLSID& rCLSID);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Unregister a Moniker prefix.
 
-void UnregisterMonikerPrefix(const tstring& strPrefix);
+void UnregisterMonikerPrefix(Scope scope, const tstring& strPrefix);
 
 //namespace COM
 }

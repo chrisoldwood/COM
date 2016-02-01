@@ -15,33 +15,72 @@ namespace COM
 ////////////////////////////////////////////////////////////////////////////////
 //! Creates or updates the default value for a registry key under the HKCR tree.
 
-static void SetRegistryValue(const tstring& strSubKey, const tstring& strValue)
+static void SetRegistryValue(Scope scope, const tstring& strSubKey, const tstring& strValue)
 {
-	WCL::RegKey::WriteKeyDefaultValue(HKEY_CLASSES_ROOT, strSubKey.c_str(), strValue.c_str());
+	ASSERT((scope == MACHINE) || (scope == USER));
+
+	if (scope == MACHINE)
+	{
+		WCL::RegKey::WriteKeyDefaultValue(HKEY_CLASSES_ROOT, strSubKey.c_str(), strValue.c_str());
+	}
+	else // (scope == USER)
+	{
+		WCL::RegKey root;
+
+		root.Open(HKEY_CURRENT_USER, TXT("Software\\Classes"), KEY_WRITE);
+
+		WCL::RegKey::WriteKeyDefaultValue(root.Handle(), strSubKey.c_str(), strValue.c_str());
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 //! Creates or updates a named value for a registry key under the HKCR tree.
 
-static void SetRegistryValue(const tstring& strSubKey, const tstring& strName, const tstring& strValue)
+static void SetRegistryValue(Scope scope, const tstring& strSubKey, const tstring& strName, const tstring& strValue)
 {
-	WCL::RegKey::WriteKeyStringValue(HKEY_CLASSES_ROOT, strSubKey.c_str(), strName.c_str(), strValue.c_str());
+	ASSERT((scope == MACHINE) || (scope == USER));
+
+	if (scope == MACHINE)
+	{
+		WCL::RegKey::WriteKeyStringValue(HKEY_CLASSES_ROOT, strSubKey.c_str(), strName.c_str(), strValue.c_str());
+	}
+	else // (scope == USER)
+	{
+		WCL::RegKey root;
+
+		root.Open(HKEY_CURRENT_USER, TXT("Software\\Classes"), KEY_WRITE);
+
+		WCL::RegKey::WriteKeyStringValue(root.Handle(), strSubKey.c_str(), strName.c_str(), strValue.c_str());
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 //! Deletes the key from under the HKCR tree.
 
-static void DeleteKey(const tstring& strSubKey)
+static void DeleteKey(Scope scope, const tstring& strSubKey)
 {
+	ASSERT((scope == MACHINE) || (scope == USER));
+
 	bool bDeleted = false;
 
-	bDeleted = WCL::RegKey::Delete(HKEY_CLASSES_ROOT, strSubKey.c_str());
+	if (scope == MACHINE)
+	{
+		bDeleted = WCL::RegKey::Delete(HKEY_CLASSES_ROOT, strSubKey.c_str());
+	}
+	else // (scope == USER)
+	{
+		WCL::RegKey root;
+
+		root.Open(HKEY_CURRENT_USER, TXT("Software\\Classes"), KEY_WRITE);
+
+		bDeleted = WCL::RegKey::Delete(root.Handle(), strSubKey.c_str());
+	}
 
 #ifdef _DEBUG
 	if (!bDeleted)
 	{
 		DWORD dwError = ::GetLastError();
-		TRACE3(TXT("Failed to delete the key 'HKCR\\%s' [0x%08X - %s]\n"), strSubKey.c_str(), dwError, CStrCvt::FormatError(dwError).c_str());
+		TRACE3(TXT("Failed to delete the key '<root>\\%s' [0x%08X - %s]\n"), strSubKey.c_str(), dwError, CStrCvt::FormatError(dwError).c_str());
 	}
 #endif
 }
@@ -86,7 +125,7 @@ static const tchar* GetThreadModelKey(ThreadingModel eModel)
 ////////////////////////////////////////////////////////////////////////////////
 //! Register a CLSID.
 
-void RegisterCLSID(const ServerRegInfo& rSvrInfo, const CLSID& rCLSID,
+void RegisterCLSID(Scope scope, const ServerRegInfo& rSvrInfo, const CLSID& rCLSID,
 					const tstring& strClass, const tstring& strVersion,
 					ThreadingModel eModel)
 {
@@ -101,27 +140,27 @@ void RegisterCLSID(const ServerRegInfo& rSvrInfo, const CLSID& rCLSID,
 	tstring strThreadModel = GetThreadModelKey(eModel);
 
 	// Create the version independent prog ID section.
-	SetRegistryValue(strProgID,                   strDescription);
-	SetRegistryValue(strProgID + TXT("\\CLSID"),  strCLSID);
-	SetRegistryValue(strProgID + TXT("\\CurVer"), strVerProgID);
+	SetRegistryValue(scope, strProgID,                   strDescription);
+	SetRegistryValue(scope, strProgID + TXT("\\CLSID"),  strCLSID);
+	SetRegistryValue(scope, strProgID + TXT("\\CurVer"), strVerProgID);
 
 	// Create the version dependent prog ID section.
-	SetRegistryValue(strVerProgID,                  strDescription);
-	SetRegistryValue(strVerProgID + TXT("\\CLSID"), strCLSID);
+	SetRegistryValue(scope, strVerProgID,                  strDescription);
+	SetRegistryValue(scope, strVerProgID + TXT("\\CLSID"), strCLSID);
 
 	// Create the CLSID section.
-	SetRegistryValue(strCLSIDKey,                                     strClass);
-	SetRegistryValue(strCLSIDKey + TXT("\\") + strServerType,         rSvrInfo.m_strFile);
-	SetRegistryValue(strCLSIDKey + TXT("\\") + strServerType,         TXT("ThreadingModel"), strThreadModel);
-	SetRegistryValue(strCLSIDKey + TXT("\\ProgID"),                   strVerProgID);
-	SetRegistryValue(strCLSIDKey + TXT("\\VersionIndependentProgID"), strProgID);
-	SetRegistryValue(strCLSIDKey + TXT("\\TypeLib"),                  strLIBID);
+	SetRegistryValue(scope, strCLSIDKey,                                     strClass);
+	SetRegistryValue(scope, strCLSIDKey + TXT("\\") + strServerType,         rSvrInfo.m_strFile);
+	SetRegistryValue(scope, strCLSIDKey + TXT("\\") + strServerType,         TXT("ThreadingModel"), strThreadModel);
+	SetRegistryValue(scope, strCLSIDKey + TXT("\\ProgID"),                   strVerProgID);
+	SetRegistryValue(scope, strCLSIDKey + TXT("\\VersionIndependentProgID"), strProgID);
+	SetRegistryValue(scope, strCLSIDKey + TXT("\\TypeLib"),                  strLIBID);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 //! Unregister a CLSID.
 
-void UnregisterCLSID(const ServerRegInfo& rSvrInfo, const CLSID& rCLSID,
+void UnregisterCLSID(Scope scope, const ServerRegInfo& rSvrInfo, const CLSID& rCLSID,
 					const tstring& strClass, const tstring& strVersion)
 {
 	// Create key names.
@@ -132,27 +171,29 @@ void UnregisterCLSID(const ServerRegInfo& rSvrInfo, const CLSID& rCLSID,
 	tstring strServerType  = GetServerTypeKey(rSvrInfo.m_eType);
 
 	// Delete the version independent prog ID section.
-	DeleteKey(strProgID + TXT("\\CLSID"));
-	DeleteKey(strProgID + TXT("\\CurVer"));
-	DeleteKey(strProgID);
+	DeleteKey(scope, strProgID + TXT("\\CLSID"));
+	DeleteKey(scope, strProgID + TXT("\\CurVer"));
+	DeleteKey(scope, strProgID);
 
 	// Delete the version dependent prog ID section.
-	DeleteKey(strVerProgID + TXT("\\CLSID"));
-	DeleteKey(strVerProgID);
+	DeleteKey(scope, strVerProgID + TXT("\\CLSID"));
+	DeleteKey(scope, strVerProgID);
 
 	// Delete the CLSID section.
-	DeleteKey(strCLSIDKey + TXT("\\") + strServerType);
-	DeleteKey(strCLSIDKey + TXT("\\ProgID"));
-	DeleteKey(strCLSIDKey + TXT("\\VersionIndependentProgID"));
-	DeleteKey(strCLSIDKey + TXT("\\TypeLib"));
-	DeleteKey(strCLSIDKey);
+	DeleteKey(scope, strCLSIDKey + TXT("\\") + strServerType);
+	DeleteKey(scope, strCLSIDKey + TXT("\\ProgID"));
+	DeleteKey(scope, strCLSIDKey + TXT("\\VersionIndependentProgID"));
+	DeleteKey(scope, strCLSIDKey + TXT("\\TypeLib"));
+	DeleteKey(scope, strCLSIDKey);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 //! Register a type library.
 
-void RegisterTypeLib(const tstring& strFile)
+void RegisterTypeLib(Scope scope, const tstring& strFile)
 {
+	ASSERT((scope == MACHINE) || (scope == USER));
+
 	wchar_t     szFile[MAX_PATH+1] = {0};
 	ITypeLibPtr pTypeLib;
 
@@ -166,7 +207,10 @@ void RegisterTypeLib(const tstring& strFile)
 		throw WCL::ComException(hr, CString::Fmt(TXT("Failed to load the type library '%s'"), strFile.c_str()));
 
 	// Register it.
-	hr = ::RegisterTypeLib(pTypeLib.get(), szFile, nullptr);
+	if (scope == MACHINE)
+		hr = ::RegisterTypeLib(pTypeLib.get(), szFile, nullptr);
+	else
+		hr = ::RegisterTypeLibForUser(pTypeLib.get(), szFile, nullptr);
 
 	if (FAILED(hr))
 		throw WCL::ComException(hr, CString::Fmt(TXT("Failed to register the type library '%s'"), strFile.c_str()));
@@ -175,12 +219,17 @@ void RegisterTypeLib(const tstring& strFile)
 ////////////////////////////////////////////////////////////////////////////////
 //! Unregister a type library.
 
-void UnregisterTypeLib(const GUID& rLIBID, ushort nMajor, ushort nMinor)
+void UnregisterTypeLib(Scope scope, const GUID& rLIBID, ushort nMajor, ushort nMinor)
 {
+	ASSERT((scope == MACHINE) || (scope == USER));
+
 	HRESULT hr = S_OK;
 
 	// Unregister it.
-	hr = ::UnRegisterTypeLib(rLIBID, nMajor, nMinor, 0, SYS_WIN32);
+	if (scope == MACHINE)
+		hr = ::UnRegisterTypeLib(rLIBID, nMajor, nMinor, 0, SYS_WIN32);
+	else
+		hr = ::UnRegisterTypeLibForUser(rLIBID, nMajor, nMinor, 0, SYS_WIN32);
 
 #ifdef _DEBUG
 	if (FAILED(hr))
@@ -194,23 +243,23 @@ void UnregisterTypeLib(const GUID& rLIBID, ushort nMajor, ushort nMinor)
 // Register a Moniker prefix. This registers the prefix for a custom moniker
 // and the CLSID to associate with it.
 
-void RegisterMonikerPrefix(const tstring& strPrefix, const tstring& strClass, const CLSID& rCLSID)
+void RegisterMonikerPrefix(Scope scope, const tstring& strPrefix, const tstring& strClass, const CLSID& rCLSID)
 {
 	// Create key names.
 	tstring strCLSID       = FormatGUID(rCLSID);
 	tstring strDescription = strClass + TXT(" Class");
 
-	SetRegistryValue(strPrefix,                  strDescription);
-	SetRegistryValue(strPrefix + TXT("\\CLSID"), strCLSID);
+	SetRegistryValue(scope, strPrefix,                  strDescription);
+	SetRegistryValue(scope, strPrefix + TXT("\\CLSID"), strCLSID);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Unregister a Moniker prefix.
 
-void UnregisterMonikerPrefix(const tstring& strPrefix)
+void UnregisterMonikerPrefix(Scope scope, const tstring& strPrefix)
 {
-	DeleteKey(strPrefix + TXT("\\CLSID"));
-	DeleteKey(strPrefix);
+	DeleteKey(scope, strPrefix + TXT("\\CLSID"));
+	DeleteKey(scope, strPrefix);
 }
 
 //namespace COM

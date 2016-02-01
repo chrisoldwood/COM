@@ -91,6 +91,43 @@ HRESULT InprocServer::DllCanUnloadNow()
 
 HRESULT InprocServer::DllRegisterServer()
 {
+	return RegisterServer(false);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//! Unregister the server from the registry.
+
+HRESULT InprocServer::DllUnregisterServer()
+{
+	return UnregisterServer(false);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//! Register or unregister the server to/from the registry.
+
+HRESULT InprocServer::DllInstall(bool install, const tchar* cmdLine)
+{
+	bool perUser = ( (cmdLine != nullptr) && (tstricmp(cmdLine, TXT("user")) == 0) );
+
+	return (install) ? RegisterServer(perUser)
+		             : UnregisterServer(perUser);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//! Template Method to get the servers class factory.
+
+COM::IClassFactoryPtr InprocServer::CreateClassFactory(const CLSID& oCLSID)
+{
+	return IClassFactoryPtr(new ClassFactory(oCLSID), true);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//! Register the server in the registry.
+
+HRESULT InprocServer::RegisterServer(bool perUser)
+{
+	Scope scope = (perUser) ? USER : MACHINE;
+
 	COM::ServerRegInfo oServerInfo;
 
 	// Fill in the known server info.
@@ -103,10 +140,10 @@ HRESULT InprocServer::DllRegisterServer()
 
 	// Register the coclasses.
 	for (; pClassInfo->m_pCLSID != nullptr; ++pClassInfo)
-		RegisterCLSID(oServerInfo, *pClassInfo->m_pCLSID, pClassInfo->m_pszName, pClassInfo->m_pszVersion, pClassInfo->m_eModel);
+		RegisterCLSID(scope, oServerInfo, *pClassInfo->m_pCLSID, pClassInfo->m_pszName, pClassInfo->m_pszVersion, pClassInfo->m_eModel);
 
 	// Register the type library.
-	RegisterTypeLib(oServerInfo.m_strFile);
+	RegisterTypeLib(scope, oServerInfo.m_strFile);
 
 	return S_OK;
 }
@@ -114,8 +151,10 @@ HRESULT InprocServer::DllRegisterServer()
 ////////////////////////////////////////////////////////////////////////////////
 //! Unregister the server from the registry.
 
-HRESULT InprocServer::DllUnregisterServer()
+HRESULT InprocServer::UnregisterServer(bool perUser)
 {
+	Scope scope = (perUser) ? USER : MACHINE;
+
 	COM::ServerRegInfo oServerInfo;
 
 	// Fill in the known server info.
@@ -128,20 +167,12 @@ HRESULT InprocServer::DllUnregisterServer()
 
 	// Unregister the coclasses.
 	for (; pClassInfo->m_pCLSID != nullptr; ++pClassInfo)
-		UnregisterCLSID(oServerInfo, *pClassInfo->m_pCLSID, pClassInfo->m_pszName, pClassInfo->m_pszVersion);
+		UnregisterCLSID(scope, oServerInfo, *pClassInfo->m_pCLSID, pClassInfo->m_pszName, pClassInfo->m_pszVersion);
 
 	// Unregister the type library.
-	UnregisterTypeLib(oServerInfo.m_oLIBID, oServerInfo.m_nMajor, oServerInfo.m_nMinor);
+	UnregisterTypeLib(scope, oServerInfo.m_oLIBID, oServerInfo.m_nMajor, oServerInfo.m_nMinor);
 
 	return S_OK;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-//! Template Method to get the servers class factory.
-
-COM::IClassFactoryPtr InprocServer::CreateClassFactory(const CLSID& oCLSID)
-{
-	return IClassFactoryPtr(new ClassFactory(oCLSID), true);
 }
 
 //namespace COM
