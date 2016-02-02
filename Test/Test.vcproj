@@ -4,6 +4,7 @@
 	Version="9.00"
 	Name="Test"
 	ProjectGUID="{C090E4B5-8456-4894-8CE4-447B940BBA0A}"
+	RootNamespace="Test"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
 	>
@@ -54,6 +55,7 @@
 				ForceConformanceInForLoopScope="true"
 				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="Common.hpp"
 				WarningLevel="4"
 				WarnAsError="true"
 				DebugInformationFormat="3"
@@ -134,6 +136,7 @@
 				ForceConformanceInForLoopScope="true"
 				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="Common.hpp"
 				WarningLevel="4"
 				WarnAsError="true"
 				DebugInformationFormat="3"
@@ -184,12 +187,15 @@
 	<References>
 		<ProjectReference
 			ReferencedProjectIdentifier="{A5573046-6334-4DDA-94B5-EA329D0B4124}"
+			RelativePathToProject="..\COM.vcproj"
 		/>
 		<ProjectReference
 			ReferencedProjectIdentifier="{790BC113-52FB-4565-8968-79B8B011C520}"
+			RelativePathToProject="..\..\Core\Core.vcproj"
 		/>
 		<ProjectReference
 			ReferencedProjectIdentifier="{9B0335B6-93BE-4604-8497-27431874D758}"
+			RelativePathToProject="..\..\WCL\Wcl.vcproj"
 		/>
 	</References>
 	<Files>
@@ -248,7 +254,11 @@
 			</File>
 		</Filter>
 		<File
-			RelativePath=".\stdafx.cpp"
+			RelativePath=".\Common.hpp"
+			>
+		</File>
+		<File
+			RelativePath=".\pch.cpp"
 			>
 			<FileConfiguration
 				Name="Debug|Win32"
@@ -266,10 +276,6 @@
 					UsePrecompiledHeader="1"
 				/>
 			</FileConfiguration>
-		</File>
-		<File
-			RelativePath=".\stdafx.h"
-			>
 		</File>
 		<File
 			RelativePath=".\Test.cpp"

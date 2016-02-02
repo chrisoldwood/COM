@@ -3,7 +3,7 @@
 //! \brief  The unit tests for the ObjectBase class.
 //! \author Chris Oldwood
 
-#include "stdafx.h"
+#include "Common.hpp"
 #include <Core/UnitTest.hpp>
 #include "TestClasses.hpp"
 #include <COM/ClassFactory.hpp>
