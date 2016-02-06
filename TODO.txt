@@ -5,5 +5,3 @@
 - Change to tstring where possible.
 
 - Cache Test.tlb for use with GCC.
-
-- Investigate per-user redirection so we can avoid building and running tests as an admin.
