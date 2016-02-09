@@ -17,7 +17,7 @@ namespace COM
 {
 
 ////////////////////////////////////////////////////////////////////////////////
-//! The implementaion of IDispatch.
+//! The implementation of IDispatch.
 
 template<typename T>
 class IDispatchImpl
@@ -28,7 +28,7 @@ public:
 
 	//! Destructor.
 	virtual ~IDispatchImpl();
-	
+
 	//
 	// IDispatch methods.
 	//
@@ -46,7 +46,7 @@ public:
 	virtual HRESULT COMCALL Invoke(DISPID lMemberID, REFIID rIID, LCID dwLCID, WORD wFlags, DISPPARAMS* pParams, VARIANT* pResult, EXCEPINFO* pExcepInfo, UINT* pnArgError);
 
 private:
-	// Type shorthands.
+	// Type short-hands.
 	typedef WCL::IFacePtr<ITypeLib>  ITypeLibPtr;
 	typedef WCL::IFacePtr<ITypeInfo> ITypeInfoPtr;
 
@@ -219,7 +219,7 @@ void IDispatchImpl<T>::LoadTypeInfo()
 	virtual HRESULT COMCALL GetIDsOfNames(REFIID rIID, LPOLESTR* aszNames, UINT nNames, LCID dwLCID, DISPID* alMemberIDs)														\
 	{ return COM::IDispatchImpl<T>::GetIDsOfNames(rIID, aszNames, nNames, dwLCID, alMemberIDs); }																				\
 	virtual HRESULT COMCALL Invoke(DISPID lMemberID, REFIID rIID, LCID dwLCID, WORD wFlags, DISPPARAMS* pParams, VARIANT* pResult, EXCEPINFO* pExcepInfo, UINT* pnArgError)		\
-	{ return COM::IDispatchImpl<T>::Invoke(lMemberID, rIID, dwLCID, wFlags, pParams, pResult, pExcepInfo, pnArgError); }																
+	{ return COM::IDispatchImpl<T>::Invoke(lMemberID, rIID, dwLCID, wFlags, pParams, pResult, pExcepInfo, pnArgError); }
 
 //namespace COM
 }

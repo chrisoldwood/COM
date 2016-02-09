@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //! \file   ComUtilsTests.cpp
-//! \brief  The unit tests for the COM util functions.
+//! \brief  The unit tests for the COM utility functions.
 //! \author Chris Oldwood
 
 #include "Common.hpp"

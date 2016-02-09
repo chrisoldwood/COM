@@ -21,7 +21,7 @@ namespace COM
 typedef WCL::IFacePtr<ITypeLib> ITypeLibPtr;
 
 ////////////////////////////////////////////////////////////////////////////////
-//! The mixin class used for the common (DLL/EXE) COM server behaviour.
+//! The mix-in class used for the common (DLL/EXE) COM server behaviour.
 
 class Server : private Core::NotCopyable
 {

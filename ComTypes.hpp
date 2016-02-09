@@ -63,7 +63,7 @@ enum ThreadingModel
 									virtual HRESULT COMCALL InterfaceSupportsErrorInfo(const IID& rIID)				\
 									{	return InterfaceSupportsErrorInfoImpl(rIID);	}
 
-//! Implements interface_cast to match and downcast to the rquired interface.
+//! Implements interface_cast to match and downcast to the required interface.
 #define DEFINE_INTERFACE_TABLE(primary_iface)												\
 									virtual void* interface_cast(const IID& rIID)			\
 									{														\
@@ -80,8 +80,8 @@ enum ThreadingModel
 //! End of CastInterfaceImpl implementation.
 #define END_INTERFACE_TABLE()																\
 										return nullptr;										\
-									}								
-									
+									}
+
 //namespace COM
 }
 

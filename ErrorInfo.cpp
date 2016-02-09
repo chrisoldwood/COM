@@ -16,11 +16,11 @@ namespace COM
 
 ////////////////////////////////////////////////////////////////////////////////
 //! Set the COM ErrorInfo object for the thread. The return value indicates if
-//! the "throw" was succesful or not.
+//! the "throw" was successful or not.
 
 bool SetComErrorInfo(const char* pszSource, const tchar* pszDescription)
 {
-	// Type shorthands
+	// Type short-hands
 	typedef WCL::ComPtr<ICreateErrorInfo> ICreateErrorInfoPtr;
 	typedef WCL::ComPtr<IErrorInfo>       IErrorInfoPtr;
 

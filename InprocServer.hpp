@@ -25,7 +25,7 @@ typedef WCL::IFacePtr<IClassFactory> IClassFactoryPtr;
 typedef WCL::IFacePtr<IUnknown> IUnknownPtr;
 
 ////////////////////////////////////////////////////////////////////////////////
-//! The base class for In-prcoess (DLL based) servers.
+//! The base class for In-process (DLL based) servers.
 
 class InprocServer : public CDll, public Server
 {
@@ -35,8 +35,8 @@ public:
 
 	//! Destructor.
 	virtual ~InprocServer();
-	
-	//! Singleton accessor.
+
+	//! Singleton accessors.
 	static InprocServer& This();
 
 protected:
@@ -107,7 +107,7 @@ private:
 #define DEFINE_CLASS_FACTORY_TABLE()																\
 									virtual COM::IUnknownPtr CreateObject(const CLSID& oCLSID)		\
 									{																\
-										COM::IUnknownPtr pUnknown;									
+										COM::IUnknownPtr pUnknown;
 
 #define DEFINE_CLASS(clsid, type, primary_iface)													\
 										if (oCLSID == clsid)										\

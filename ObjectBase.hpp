@@ -46,10 +46,10 @@ public:
 
 	//! Query the object for a particular interface.
 	virtual HRESULT QueryInterfaceImpl(const IID& rIID, void** ppInterface);
-    
+
 	//! Increment the objects reference count.
 	virtual ULONG AddRefImpl();
-    
+
 	//! Decrement the objects reference count.
 	virtual ULONG ReleaseImpl();
 
@@ -57,7 +57,7 @@ public:
 	// ISupportErrorInfo methods.
 	//
 
-	//! Queries if the interface supports COM exceptiopns.
+	//! Queries if the interface supports COM exceptions.
 	virtual HRESULT InterfaceSupportsErrorInfoImpl(const IID& rIID);
 
 protected:
@@ -154,7 +154,7 @@ inline ULONG ObjectBase<Base>::ReleaseImpl()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-//! Queries if the interface supports COM exceptiopns.
+//! Queries if the interface supports COM exceptions.
 
 template<typename Base>
 inline HRESULT ObjectBase<Base>::InterfaceSupportsErrorInfoImpl(const IID& /*rIID*/)
