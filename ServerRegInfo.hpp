@@ -78,7 +78,7 @@ struct ClassRegInfo
 				{ &clsid, name, version, model },					
 
 #define END_REGISTRATION_TABLE()											\
-				{ NULL, NULL, NULL, static_cast<COM::ThreadingModel>(0) }	\
+				{ nullptr, nullptr, nullptr, static_cast<COM::ThreadingModel>(0) }	\
 			};																\
 			return aoClasses;												\
 		}																
