@@ -111,7 +111,7 @@ inline HRESULT ObjectBase<Base>::QueryInterfaceImpl(const IID& rIID, void** ppIn
 	if (ppInterface == nullptr)
 		return E_POINTER;
 
-	// Aquire interface pointer.
+	// Acquire interface pointer.
 	*ppInterface = interface_cast(rIID);
 
 	if (*ppInterface != nullptr)
