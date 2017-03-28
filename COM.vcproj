@@ -4,6 +4,7 @@
 	Version="9.00"
 	Name="COM"
 	ProjectGUID="{A5573046-6334-4DDA-94B5-EA329D0B4124}"
+	RootNamespace="COM"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
 	>
@@ -47,7 +48,6 @@
 				MinimalRebuild="true"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
-				SmallerTypeCheck="true"
 				RuntimeLibrary="1"
 				TreatWChar_tAsBuiltInType="true"
 				ForceConformanceInForLoopScope="true"
