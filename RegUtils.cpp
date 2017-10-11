@@ -8,6 +8,7 @@
 #include "ServerRegInfo.hpp"
 #include "ComUtils.hpp"
 #include <WCL/RegKey.hpp>
+#include <Core/NotImplException.hpp>
 
 namespace COM
 {
@@ -210,7 +211,11 @@ void RegisterTypeLib(Scope scope, const tstring& strFile)
 	if (scope == MACHINE)
 		hr = ::RegisterTypeLib(pTypeLib.get(), szFile, nullptr);
 	else
+#ifndef __GNUC__
 		hr = ::RegisterTypeLibForUser(pTypeLib.get(), szFile, nullptr);
+#else
+		throw Core::NotImplException(TXT("RegisterTypeLibForUser() not supported"));
+#endif
 
 	if (FAILED(hr))
 		throw WCL::ComException(hr, CString::Fmt(TXT("Failed to register the type library '%s'"), strFile.c_str()));
@@ -229,7 +234,11 @@ void UnregisterTypeLib(Scope scope, const GUID& rLIBID, ushort nMajor, ushort nM
 	if (scope == MACHINE)
 		hr = ::UnRegisterTypeLib(rLIBID, nMajor, nMinor, 0, SYS_WIN32);
 	else
+#ifndef __GNUC__
 		hr = ::UnRegisterTypeLibForUser(rLIBID, nMajor, nMinor, 0, SYS_WIN32);
+#else
+		throw Core::NotImplException(TXT("UnRegisterTypeLibForUser() not supported"));
+#endif
 
 #ifdef _DEBUG
 	if (FAILED(hr))
