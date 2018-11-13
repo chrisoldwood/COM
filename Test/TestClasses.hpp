@@ -26,7 +26,8 @@ static const GUID LIBID_TestServerLib = { 0x12345678, 0x1234, 0x1234, { 0x01, 0x
 ////////////////////////////////////////////////////////////////////////////////
 //! The ObjectBase test class interface.
 
-#ifdef _MSC_VER
+#if _MSC_VER > 1000 && _MSC_VER < 1900
+// Note: generates "C4467: usage of ATL attributes is deprecated" for VC++ 14.0+.
 [uuid ("{12345678-1234-1234-0102-030405060708}")]
 #endif
 struct ITestInterface : public IUnknown
