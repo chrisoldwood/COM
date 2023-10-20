@@ -6,6 +6,11 @@
 #include "Common.hpp"
 #include "InprocServer.hpp"
 
+#if (__GNUC__ >= 8) // GCC 8+
+// error: format '%hs' expects argument of type 'short int*', but argument 3 has type 'const char*' [-Werror=format=]
+#pragma GCC diagnostic ignored "-Wformat"
+#endif
+
 ////////////////////////////////////////////////////////////////////////////////
 //! Entry point for obtaining the class factory.
 

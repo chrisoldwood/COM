@@ -81,7 +81,7 @@ static void DeleteKey(Scope scope, const tstring& strSubKey)
 	if (!bDeleted)
 	{
 		DWORD dwError = ::GetLastError();
-		TRACE3(TXT("Failed to delete the key '<root>\\%s' [0x%08X - %s]\n"), strSubKey.c_str(), dwError, CStrCvt::FormatError(dwError).c_str());
+		TRACE3(TXT("Failed to delete the key '<root>\\%s' [0x%08lX - %s]\n"), strSubKey.c_str(), dwError, CStrCvt::FormatError(dwError).c_str());
 	}
 #endif
 }
@@ -243,7 +243,7 @@ void UnregisterTypeLib(Scope scope, const GUID& rLIBID, ushort nMajor, ushort nM
 #ifdef _DEBUG
 	if (FAILED(hr))
 	{
-		TRACE2(TXT("Failed to unregister the type library [0x%08X - %s]"), hr, CStrCvt::FormatError(hr).c_str());
+		TRACE2(TXT("Failed to unregister the type library [0x%08lX - %s]"), hr, CStrCvt::FormatError(hr).c_str());
 	}
 #endif
 }
